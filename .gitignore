@@ -1,0 +1,45 @@
+# [Git Ignore](http://gitignore.io) #
+
+### Sublime Text ###
+
+# SublimeText project files
+*.sublime-workspace
+
+
+### Windows ###
+
+# Windows image file caches
+Thumbs.db
+ehthumbs.db
+
+# Folder config file
+Desktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/
+
+
+### NodeJS ###
+*.seed
+*.log
+*.csv
+*.dat
+*.out
+*.pid
+*.gz
+
+lib-cov
+pids
+logs
+results
+
+npm-debug.log
+node_modules
+
+
+### Heroku ###
+*.env
+
+
+### Bower ###
+components
