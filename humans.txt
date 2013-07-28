@@ -1,0 +1,23 @@
+# Humans Responsible & Technology Colophon
+
+
+# Team
+
+	Name: 			Rolandjitsu
+	Site: 			[ rolandjitsu.com ](http://rolandjitsu.com/)
+	Twitter: 		[ rolandjitsu ](https://twitter.com/rolandjitsu/)
+	Location: 		Aarhus, Denmark
+
+
+# Technology Colophon
+	
+	Standards:		HTML5, CSS3, JavaScript
+	Components: 	Modernizr, jQuery, UnderscoreJS, AngularJS
+	Server:			[ NodeJS ](http://nodejs.org/)
+	Hosted:			[ Heroku ](https://www.heroku.com/)
+	Software:		Sublime Text 3 [ Beta ]
+
+
+# Updates
+
+	Updated: 		2013/07/28
