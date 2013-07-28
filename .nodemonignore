@@ -1,0 +1,10 @@
+# Nodemon Ignored Files / Folders #
+
+components/**
+node_modules/**
+public/**
+
+bower.json
+package.json
+drawerjs.js
+*.drawerjs.js

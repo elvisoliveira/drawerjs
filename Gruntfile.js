@@ -130,5 +130,5 @@ module.exports = function (grunt) {
 	grunt.registerTask("observe", ["concurrent:observe"]);
 	grunt.registerTask("test", ["lint"]);
 
-	grunt.registerTask("default", [""]);
+	grunt.registerTask("default", ["observe"]);
 };
