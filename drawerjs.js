@@ -23,8 +23,7 @@
 	var defaults = {
 
 			content: "#drawerjs-content",
-			easing: "ease-out",
-			offset: 80,
+			offset: 120,
 			navigation: "#drawerjs-navigation",
 			scrolling: true,
 			speed: 250
@@ -75,7 +74,6 @@
 		this.transition = {
 			duration: this.prefixed("transitionDuration"),
 			property: this.prefixed("transitionProperty"),
-			easing: this.prefixed("transitionTimingFunction"),
 			end: transitions[transition]
 		};
 
@@ -100,12 +98,9 @@
 						media = ["@media (", prefixes, this.drawerjs, ")", "{ #drawerjs { top: 9px; position: absolute; } }"].join("");
 
 					if (("ontouchstart" in window) || window.DocumentTouch && document instanceof DocumentTouch) {
-						
 						bool = true;
 					} else {
-
 						this.inject(media, function (node) {
-						
 							bool = node.offsetTop === 9;
 						});
 					}
@@ -186,7 +181,6 @@
 			if (this.isArray(object) || this.isString(object)) return object.length === 0;
 
 			for (var key in object) {
-
 				if (this.objectHasKey(object, key)) return false;
 			}
 
@@ -216,7 +210,6 @@
 				for (var key in object) {
 					
 					if (this.objectHasKey(object, key)) {
-
 						if (iterator.call(context, object[key], key, object) === this.breaker) return;
 					}
 				}
@@ -233,7 +226,6 @@
 				if (source) {
 					
 					for (var prop in source) {
-						
 						if (source.hasOwnProperty(prop)) object[prop] = source[prop];
 					}
 				}
@@ -250,9 +242,7 @@
 			for (i in props) {
 				
 				if (props.hasOwnProperty(i)) {
-
-					prop = props[i];
-									
+					prop = props[i];	
 					if (!this.contains(prop, "-") && !this.isUndefined(this.style[prop])) return prefixed === "pfx" ? prop : true;
 				}
 			}
@@ -274,9 +264,7 @@
 					if (!this.isUndefined(item)) {
 
 						if (element === false) return props[i];
-
 						if (this.isFunction(item)) return this.prototypes.fn.bind.call(item, element || object);
-
 						return item;
 					}
 				}
@@ -333,7 +321,6 @@
 			if (parseInt(nodes, 10)) {
 
 				while (nodes--) {
-
 					node = document.createElement("div");
 					node.id = tests ? tests[nodes] : this.drawerjs + (nodes + 1);
 					div.appendChild(node);
@@ -373,7 +360,6 @@
 			if (result && "webkitPerspective" in this.elements.document.style) {
 
 				this.inject("@media (transform-3d), (-webkit-transform-3d) { #drawerjs { left: 9px; position: absolute; height: 3px; } }", function (node) {
-	
 					result = node.offsetLeft === 9 && node.offsetHeight === 3;
 				});
 			}
@@ -381,75 +367,21 @@
 			return result;
 		},
 
-		translate: function (element, distance, speed, easing) {
+		translate: function (element, distance, speed) {
 
-			var style = element.style;
+			var style = element.style,
+				transition = style[this.transition.property];
 
 			style[this.transition.duration] = speed + "ms";
-			style[this.transition.property] = this.transform.css;
-			style[this.transition.easing] = easing;
+			if(this.isEmpty(transition) || transition !== this.transition.property) style[this.transition.property] = this.transform.css;
 
 			if (this.browser.supports.transforms) {
-
 				style[this.transform.js] = "translate(" + distance + "px, 0)" + "translateZ(0)";
-				
 				return;
 			}
 
 			style[this.transform.js] = "translateX(" + distance + "px)";
 		}
-	};
-
-	var utils = new Utils();
-
-	var Drawerjs = function (element, options) {
-
-		this.version = "1.0.0";
-		this.options = utils.extend({}, defaults, options);
-		
-		var selectors = {
-
-				element: element,
-				content: this.options.content,
-				navigation: this.options.navigation
-			},
-			isAnyFlex = utils.browser.supports.flexbox || utils.browser.supports.flexboxlegacy || utils.browser.supports.flexboxhybrid;
-
-		utils.each(selectors, function (selector, key) {
-
-			this[key] = utils.isElement(selector) ? selector : utils.select(selector);
-		}, this);
-
-		if (!utils.isElement(this.element) || !utils.browser.supports.addEventListener || !isAnyFlex) return;
-
-		var events = new Events(this.content, this.options),
-			styles = {
-				element: this.element.style,
-				content: this.content.style,
-				navigation: this.navigation.style
-			};
-
-		styles.element.display = utils.flex.display;
-		styles.element[utils.touch.callout] = "none";
-		styles.element[utils.touch.hightlight] = "rgba(000, 000, 000, 0)";
-		styles.element[utils.touch.select] = "none";
-		styles.element[utils.text.adjust] = "none";
-		styles.element[utils.text.smoothing] = "antialiased";
-		styles.element[utils.backface] = "hidden";
-		styles.element.overflowX = "hidden";
-		styles.content[utils.flex.length] = "1";
-		utils.translate(this.content, 0, 0, this.options.easing);
-		styles.element.visibility = "visible";
-
-		if (utils.browser.supports.touch) this.content.addEventListener("touchstart", events, false);
-		if (utils.browser.supports.transitions) this.content.addEventListener(utils.transition.end, events, false);
-
-		window.addEventListener("resize", this, false);
-	};
-
-	Drawerjs.prototype = {
-
-		constructor: Drawerjs
 	};
 
 	var Events = function (element, options) {
@@ -515,7 +447,7 @@
 
 			if ((delta.x < 0 && index === 0) || (delta.x > 0 && index === 1)) return;
 
-			utils.translate(this.element, index === 1 ? viewport - Math.abs(delta.x) - this.options.offset: delta.x, 0, this.options.easing);
+			utils.translate(this.element, index === 1 ? viewport - Math.abs(delta.x) - this.options.offset: delta.x, 0);
 		},
 
 		end: function () {
@@ -547,7 +479,7 @@
 
 			if (!pulled && !utils.isUndefined(this.options.onOpen)) this.options.onOpen.call();
 
-			utils.translate(this.element, viewport - this.options.offset, this.options.speed, this.options.easing);
+			utils.translate(this.element, viewport - this.options.offset, this.options.speed);
 			index = 1;
 			pulled = true;
 		},
@@ -556,7 +488,7 @@
 			
 			if (pulled && !utils.isUndefined(this.options.onClose)) this.options.onClose.call();
 
-			utils.translate(this.element, 0, this.options.speed, this.options.easing);
+			utils.translate(this.element, 0, this.options.speed);
 			index = 0;
 			pulled = false;
 		},
@@ -567,6 +499,57 @@
 
 			if (index === 1) this.close();
 		}
+	};
+
+	var utils = new Utils();
+
+	var Drawerjs = function (element, options) {
+
+		this.version = "1.0.0";
+		this.options = utils.extend({}, defaults, options);
+		
+		var selectors = {
+				element: element,
+				content: this.options.content,
+				navigation: this.options.navigation
+			},
+			isAnyFlex = utils.browser.supports.flexbox || utils.browser.supports.flexboxlegacy || utils.browser.supports.flexboxhybrid;
+
+		utils.each(selectors, function (selector, key) {
+
+			this[key] = utils.isElement(selector) ? selector : utils.select(selector);
+		}, this);
+
+		if (!utils.isElement(this.element) || !utils.browser.supports.addEventListener || !isAnyFlex) return;
+
+		var events = new Events(this.content, this.options),
+			style = {
+				element: this.element.style,
+				content: this.content.style,
+				navigation: this.navigation.style
+			};
+
+		style.element.display = utils.flex.display;
+		style.element[utils.touch.callout] = "none";
+		style.element[utils.touch.hightlight] = "rgba(000, 000, 000, 0)";
+		style.element[utils.touch.select] = "none";
+		style.element[utils.text.adjust] = "none";
+		style.element[utils.text.smoothing] = "antialiased";
+		style.element[utils.backface] = "hidden";
+		style.element.overflowX = "hidden";
+		style.content[utils.flex.length] = "1";
+		utils.translate(this.content, 0, 0);
+		style.element.visibility = "visible";
+
+		if (utils.browser.supports.touch) this.content.addEventListener("touchstart", events, false);
+		if (utils.browser.supports.transitions) this.content.addEventListener(utils.transition.end, events, false);
+
+		window.addEventListener("resize", this, false);
+	};
+
+	Drawerjs.prototype = {
+
+		constructor: Drawerjs
 	};
 
 
