@@ -1,4 +1,4 @@
-;(function ($, window, document, undefined) {
+(function ($, window, document, undefined) {
 
 	/**
 	 * Plugin Definition
@@ -21,7 +21,7 @@
 				$this.data("drawerjs", data);
 			}
 
-			if (typeof option == "string") {
+			if (typeof option === "string") {
 
 				data[option]();
 			}
