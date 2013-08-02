@@ -1,9 +1,9 @@
 /**
  * Drawerjs 1.0.0
  *
- * [Drawerjs](http://drawerjs.rolandjitsu.com)
+ * http://drawerjs.rolandjitsu.com
  * Copyright (c) 2013 Rolandjitsu
- * [License](https://github.com/rolandjitsu/drawerjs/blob/master/LICENSE.md)
+ * License MIT
  *
  */
 
@@ -31,14 +31,14 @@
 
 	var Utils = function () {
 
+		this.drawerjs = "drawerjs";
+		this.breaker = {};
+		
 		this.prototypes = {
-
 			array: Array.prototype,
 			fn: Function.prototype,
 			object: Object.prototype
 		};
-
-		this.drawerjs = "drawerjs";
 
 		this.elements = {
 			document: document.documentElement,
@@ -48,21 +48,6 @@
 		this.style = this.elements.drawerjs.style;
 		this.body = document.body;
 
-		this.breaker = {};
-
-		this.touch = {
-			callout: this.prefixed("touchCallout"),
-			hightlight: this.prefixed("tapHighlightColor"),
-			select: this.prefixed("userSelect")
-		};
-
-		this.text = {
-			adjust: this.prefixed("textSizeAdjust"),
-			smoothing: this.prefixed("fontSmoothing")
-		};
-
-		this.backface = this.prefixed("backfaceVisibility");
-
 		var transitions = {
 				"transition": "transitionend",
 				"OTransition": "oTransitionEnd",
@@ -71,19 +56,8 @@
 			},
 			transition = this.prefixed("transition");
 
-		this.transition = {
-			duration: this.prefixed("transitionDuration"),
-			property: this.prefixed("transitionProperty"),
-			end: transitions[transition]
-		};
-
 		var transform = this.prefixed("transform");
-
-		this.transform = {
-			css: this.hyphen(transform),
-			js: transform
-		};
-
+		
 		this.browser = {
 			prefixes: {
 				css: ["-webkit-", "-moz-", "-o-", "-ms-"],
@@ -91,22 +65,7 @@
 			},
 			supports: {
 				addEventListener: this.isUndefined(window.addEventListener) ? false : true,
-				touch: (function () {
-
-					var bool,
-						prefixes = ["-webkit-", "-moz-", "-o-", "-ms-"].join("touch-enabled), ("),
-						media = ["@media (", prefixes, this.drawerjs, ")", "{ #drawerjs { top: 9px; position: absolute; } }"].join("");
-
-					if (("ontouchstart" in window) || window.DocumentTouch && document instanceof DocumentTouch) {
-						bool = true;
-					} else {
-						this.inject(media, function (node) {
-							bool = node.offsetTop === 9;
-						});
-					}
-
-					return bool;
-				}).apply(this, []),
+				touch: this.isTouchSupported(),
 				transition: transition !== false ? true : false,
 				transforms: this.isTransform3DSupported(),
 				flexbox: this.testPropsAll("flexBasis", "1px", true),
@@ -115,16 +74,30 @@
 			}
 		};
 
-		this.flex = {
-			display: (function () {
-				if (this.browser.supports.flexbox) return this.hyphen(this.prefixed("flex"));
-				if (this.browser.supports.flexboxlegacy) return this.hyphen(this.prefixed("box"));
-				if (this.browser.supports.flexboxhybrid) return this.hyphen(this.prefixed("flexbox"));
-			}).apply(this, []),
-			length: (function () {
-				if (this.browser.supports.flexbox) return this.prefixed("flex");
-				if (this.browser.supports.flexboxlegacy) return this.prefixed("boxFlex");
-			}).apply(this, [])
+		this.properties = {
+			touch: {
+				callout: this.prefixed("touchCallout"),
+				hightlight: this.prefixed("tapHighlightColor"),
+				select: this.prefixed("userSelect")
+			},
+			text: {
+				adjust: this.prefixed("textSizeAdjust"),
+				smoothing: this.prefixed("fontSmoothing")
+			},
+			backface: this.prefixed("backfaceVisibility"),
+			transition: {
+				duration: this.prefixed("transitionDuration"),
+				property: this.prefixed("transitionProperty"),
+				end: transitions[transition]
+			},
+			transform: {
+				css: this.hyphen(transform),
+				js: transform
+			},
+			flex: {
+				display: this.flexdisplay(),
+				length: this.flexlength()
+			}
 		};
 	};
 
@@ -135,60 +108,45 @@
 		noop: function () {},
 
 		offLoadFn: function (fn) {
-
 			setTimeout(fn || this.noop, 0);
 		},
 
 		isUndefined: function (object) {
-			
 			return object === void 0;
 		},
 
-		isObject: function (object) {
-			
-			return object === Object(object);
-		},
-
 		isArray: function (object) {
-
 			return Array.isArray(object);
 		},
 
 		isString: function (object) {
-
 			return this.prototypes.object.toString.call(object) === "[object String]";
 		},
 
 		isFunction: function (object) {
-
 			return this.prototypes.object.toString.call(object) === "[object Function]";
 		},
 
 		objectHasKey: function (object, key) {
-
 			return this.prototypes.object.hasOwnProperty.call(object, key);
 		},
 
 		contains: function (str, substr) {
-			
 			return !!~("" + str).indexOf(substr);
 		},
 
 		isEmpty: function (object) {
 			
+			var isArrayOrString = this.isArray(object) || this.isString(object),
+				keys = isArrayOrString ? object : Object.keys(object),
+				length = isArrayOrString ? object.length : keys.length;
+
 			if (object === null) return true;
 
-			if (this.isArray(object) || this.isString(object)) return object.length === 0;
-
-			for (var key in object) {
-				if (this.objectHasKey(object, key)) return false;
-			}
-
-			return true;
+			return length === 0;
 		},
 
 		isElement: function (object) {
-
 			return !!(object && object.nodeType === 1);
 		},
 
@@ -196,23 +154,14 @@
 
 			if (object === null) return;
 
-			if (this.prototypes.array.forEach && object.forEach === this.prototypes.array.forEach) {
-	
-				object.forEach(iterator, context);
-			} else if (object.length === + object.length) {
+			var isArray = this.isArray(object),
+				i, key,
+				keys = isArray ? object : Object.keys(object),
+				length = isArray ? object.length : keys.length;
 
-				for (var i = 0, length = object.length; i < length; i++) {
-
-					if (iterator.call(context, object[i], i, object) === this.breaker) return;
-				}
-			} else {
-
-				for (var key in object) {
-					
-					if (this.objectHasKey(object, key)) {
-						if (iterator.call(context, object[key], key, object) === this.breaker) return;
-					}
-				}
+			for (i = length - 1; i >= 0; i--) {
+				key = isArray ? i : keys[i];
+				if (iterator.apply(context, [ object[key], key, object]) === this.breaker) return;
 			}
 		},
 
@@ -222,29 +171,25 @@
 				iterator = this.prototypes.array.slice.call(args, 1);
 
 			this.each(iterator, function (source) {
-				
 				if (source) {
-					
-					for (var prop in source) {
-						if (source.hasOwnProperty(prop)) object[prop] = source[prop];
-					}
+					this.each(source, function (prop, key) {
+						object[key] = source[key];
+					});
 				}
-			});
+			}, this);
 
 			return object;
 		},
 
 		testProps: function (props, prefixed) {
 
-			var i,
-				prop;
+			var i, prop,
+				keys = Object.keys(props),
+				length = keys.length;
 
-			for (i in props) {
-				
-				if (props.hasOwnProperty(i)) {
-					prop = props[i];	
-					if (!this.contains(prop, "-") && !this.isUndefined(this.style[prop])) return prefixed === "pfx" ? prop : true;
-				}
+			for (i = length - 1; i >= 0; i--) {
+				prop = props[keys[i]];
+				if (!this.contains(prop, "-") && !this.isUndefined(this.style[prop])) return prefixed === "pfx" ? prop : true;
 			}
 
 			return false;
@@ -252,21 +197,19 @@
 
 		testDOMProps: function (props, object, element) {
 
-			var i,
-				item;
+			var item, i, key,
+				keys = Object.keys(object),
+				length = keys.length;
 
-			for (i in props) {
-
-				if (props.hasOwnProperty(i)) {
-
-					item = object[props[i]];
-					
-					if (!this.isUndefined(item)) {
-
-						if (element === false) return props[i];
-						if (this.isFunction(item)) return this.prototypes.fn.bind.call(item, element || object);
-						return item;
-					}
+			for (i = length - 1; i >= 0; i--) {
+				
+				key = keys[i];
+				item = object[props[key]];
+				
+				if (!this.isUndefined(item)) {
+					if (element === false) return props[key];
+					if (this.isFunction(item)) return this.prototypes.fn.bind.call(item, element || object);
+					return item;
 				}
 			}
 			
@@ -298,7 +241,6 @@
 			return string.replace(/([A-Z])/g, function (string, m1) {
 
 				return "-" + m1.toLowerCase();
-
 			}).replace(/^ms-/, "-ms-");
 		},
 
@@ -329,7 +271,6 @@
 
 			style = ["&#173;", "<style id=\"s", this.drawerjs, "\">", rule, "</style>"].join("");
 			div.id = this.drawerjs;
-
 			(this.body ? div : body).innerHTML += style;
 			body.appendChild(div);
 
@@ -367,20 +308,53 @@
 			return result;
 		},
 
+		isTouchSupported: function () {
+
+			var bool,
+				prefixes = ["-webkit-", "-moz-", "-o-", "-ms-"].join("touch-enabled), ("),
+				media = ["@media (", prefixes, this.drawerjs, ")", "{ #drawerjs { top: 9px; position: absolute; } }"].join("");
+
+			if (("ontouchstart" in window) || window.DocumentTouch && document instanceof DocumentTouch) {
+				bool = true;
+			} else {
+				this.inject(media, function (node) {
+					bool = node.offsetTop === 9;
+				});
+			}
+
+			return bool;
+		},
+
+		flexdisplay: function () {
+
+			if (this.browser.supports.flexbox) return this.hyphen(this.prefixed("flex"));
+			if (this.browser.supports.flexboxlegacy) return this.hyphen(this.prefixed("box"));
+			if (this.browser.supports.flexboxhybrid) return this.hyphen(this.prefixed("flexbox"));
+		},
+
+		flexlength: function () {
+
+			if (this.browser.supports.flexbox) return this.prefixed("flex");
+			if (this.browser.supports.flexboxlegacy) return this.prefixed("boxFlex");
+		},
+
 		translate: function (element, distance, speed) {
 
 			var style = element.style,
-				transition = style[this.transition.property];
+				property = this.properties.transition.property,
+				transition = style[property],
+				duration = this.properties.transition.duration,
+				transform = this.properties.transform.js;
 
-			style[this.transition.duration] = speed + "ms";
-			if(this.isEmpty(transition) || transition !== this.transition.property) style[this.transition.property] = this.transform.css;
+			style[duration] = speed + "ms";
+			if (this.isEmpty(transition) || transition !== property) style[property] = this.properties.transform.css;
 
 			if (this.browser.supports.transforms) {
-				style[this.transform.js] = "translate(" + distance + "px, 0)" + "translateZ(0)";
+				style[transform] = "translate(" + distance + "px, 0)" + "translateZ(0)";
 				return;
 			}
 
-			style[this.transform.js] = "translateX(" + distance + "px)";
+			style[transform] = "translateX(" + distance + "px)";
 		}
 	};
 
@@ -401,7 +375,7 @@
 			if (type === "touchstart") this.start(event);
 			if (type === "touchmove") this.move(event);
 			if (type === "touchend") utils.offLoadFn(this.end(event));
-			if (utils.transition.end) utils.offLoadFn(this.transitioned(event));
+			if (utils.properties.transition.end) utils.offLoadFn(this.transitioned(event));
 			if (type === "resize") utils.offLoadFn(this.reset());
 		},
 
@@ -497,7 +471,7 @@
 
 			viewport = window.innerWidth;
 
-			if (index === 1) this.close();
+			if (pulled) this.close();
 		}
 	};
 
@@ -516,7 +490,6 @@
 			isAnyFlex = utils.browser.supports.flexbox || utils.browser.supports.flexboxlegacy || utils.browser.supports.flexboxhybrid;
 
 		utils.each(selectors, function (selector, key) {
-
 			this[key] = utils.isElement(selector) ? selector : utils.select(selector);
 		}, this);
 
@@ -529,20 +502,20 @@
 				navigation: this.navigation.style
 			};
 
-		style.element.display = utils.flex.display;
-		style.element[utils.touch.callout] = "none";
-		style.element[utils.touch.hightlight] = "rgba(000, 000, 000, 0)";
-		style.element[utils.touch.select] = "none";
-		style.element[utils.text.adjust] = "none";
-		style.element[utils.text.smoothing] = "antialiased";
-		style.element[utils.backface] = "hidden";
+		style.element.display = utils.properties.flex.display;
+		style.element[utils.properties.touch.callout] = "none";
+		style.element[utils.properties.touch.hightlight] = "rgba(000, 000, 000, 0)";
+		style.element[utils.properties.touch.select] = "none";
+		style.element[utils.properties.text.adjust] = "none";
+		style.element[utils.properties.text.smoothing] = "antialiased";
+		style.element[utils.properties.backface] = "hidden";
 		style.element.overflowX = "hidden";
-		style.content[utils.flex.length] = "1";
+		style.content[utils.properties.flex.length] = "1";
 		utils.translate(this.content, 0, 0);
 		style.element.visibility = "visible";
 
 		if (utils.browser.supports.touch) this.content.addEventListener("touchstart", events, false);
-		if (utils.browser.supports.transitions) this.content.addEventListener(utils.transition.end, events, false);
+		if (utils.browser.supports.transitions) this.content.addEventListener(utils.properties.transition.end, events, false);
 
 		window.addEventListener("resize", this, false);
 	};
