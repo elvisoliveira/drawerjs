@@ -119,6 +119,10 @@
 			return Array.isArray(object);
 		},
 
+		isObject: function (object) {
+			return object === Object(object);
+		},
+
 		isString: function (object) {
 			return this.prototypes.object.toString.call(object) === "[object String]";
 		},
@@ -480,7 +484,7 @@
 	var Drawerjs = function (element, options) {
 
 		this.version = "1.0.0";
-		this.options = utils.extend({}, defaults, options);
+		this.options = utils.extend({}, defaults, utils.isUndefined(options) || !utils.isObject(options) ? {} : options);
 		
 		var selectors = {
 				element: element,
