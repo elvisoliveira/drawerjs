@@ -43,3 +43,15 @@ node_modules
 
 ### Bower ###
 components
+
+
+### Temporary ###
+
+*.txt
+*.bowerrc
+*.jshintignore
+*jshintrc
+*.nodemonignore
+Gruntfile.js
+package.json
+Procfile
