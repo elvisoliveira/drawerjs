@@ -5,14 +5,8 @@
 
 	"ignore": [
 		
-		"*.env",
 		".gitignore",
 		"*.md",
-		"*.txt",
-		"Procfile",
-		"components/*",
-		"docs/**",
-		"node_modules/**",
-		"public/**"
+		"*.json"
 	]
 }
