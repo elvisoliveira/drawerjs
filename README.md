@@ -1,9 +1,11 @@
 ### [Drawerjs](http://codepen.io/rolandjitsu/pen/CgmGd)
+=======================================================
 
-A simple off canvas navigation build with JavaScript &amp; CSS3. It's library agnostic, provides support for jQuery and AMD and it's simple to set up and use.
+> A simple off canvas navigation build with JavaScript &amp; CSS3. It's library agnostic, provides support for jQuery and AMD and it's simple to set up and use.
+
 
 #### Documentaion
-
+-----------------
 
 ##### Usage
 
@@ -39,58 +41,68 @@ At this point you can instantiate the class:
 ``` js
 var drawerjs = new Drawerjs(document.body);
 ```
-The navigation should now be working.
+There you go, you got yourself an off canvas navigation.
 
 ##### Options
 
 As mentioned above, you can change the default ids to the ids that you want, for that there are a few options available:
 
-- **content** *String / DOM Object* (Default: "#drawerjs-content") - with this option you specify the *id* o the content. There is a built in selector method that will query the DOM and get the id that you have passed, if you will not send an id you must query it and send the DOM object:
-
++ **content** *String / DOM Object* (Default: "#drawerjs-content") - with this option you specify the *id* o the content. There is a built in selector method that will query the DOM and get the id that you have passed, if you will not send an id you must query it and send the DOM object:
 ``` js
 var drawerjs = new Drawerjs(document.body, {
 	
 	content: document.getElementsByClassName("content")
 });
-
 ```
-- **offset** *Integer* (Default: 120) - this options will set the amount of pixels that will be visible from the content when the navigation is visible;
-- **navigation** *String / DOM Object* (Default: "#drawerjs-navigation") - with this option you specify the *id* o the navigation. The behavior is the same as the *content* option has:
-
++ **offset** *Integer* (Default: 120) - this options will set the amount of pixels that will be visible from the content when the navigation is visible;
++ **navigation** *String / DOM Object* (Default: "#drawerjs-navigation") - with this option you specify the *id* o the navigation. The behavior is the same as the *content* option has:
 ``` js
 var drawerjs = new Drawerjs(document.body, {
 	
 	navigation: document.getElementsByClassName("navigation")
 });
 ```
-
-- **speed** *Integer* (Default: 250) - this options sets the speed of the animation when the navigation is closed or opened;
-- **onOpen** *Function* - it's a function that it's triggerd each time the navigation is opened (when the content is slided out), but it is not triggered if the content slides back in case it's not dragged more than half the viewport width:
-
++ **speed** *Integer* (Default: 250) - this options sets the speed of the animation when the navigation is closed or opened;
++ **onOpen** *Function* - it's a function that it's triggerd each time the navigation is opened (when the content is slided out), but it is not triggered if the content slides back in case it's not dragged more than half the viewport width:
 ``` js
 var drawerjs = new Drawerjs(document.body, {
 	
 	onOpen: function () {}
 });
 ```
-
-- **onClose** *Function* - the same as the *onOpen* option, but with oposite behavior:
-
++ **onClose** *Function* - the same as the *onOpen* option, but with oposite behavior:
 ``` js
 var drawerjs = new Drawerjs(document.body, {
 	
 	onOpen: function () {}
 });
 ```
-
-- **transitioned** *Function* - this options allows you to do stuff whenever the content is transitioned, no matter if it's pulled back or closed / opened:
-
++ **transitioned** *Function* - this options allows you to do stuff whenever the content is transitioned, no matter if it's pulled back or closed / opened:
 ``` js
 var drawerjs = new Drawerjs(document.body, {
 	
 	transitioned: function () {}
 });
 ```
-#### Compatibility
 
-This library is using Flexbox, it is not supported by old browsers, check [Flexbox](http://caniuse.com/flexbox) for more information about which browsers do support it.
+
+#### Compatibility
+------------------
+
+Currently this library is using [Flexbox](https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Flexible_boxes) for layout (it is not supported by old browsers, check [Caniuse](http://caniuse.com/flexbox) for more information about which browsers do support it), [2D](http://caniuse.com/transforms2d) or [3D](http://caniuse.com/transforms3d) [transforms](https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Using_CSS_transforms) to animate the content on pullback / close / open.
+The library is also making use of some javascript native methods like [addEventListener](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget.addEventListener) which is not supported in all browsers. To see which browser supports these features, check the table bellow:
+
+| Browser            | Flexbox *(Old)* | Flexbox *(Hybrid)* | Flexbox *(New)* | addEventListener | transition | transforms *(2D)* | transforms *(3D)* |
+| ------------------ |:---------------:|:------------------:|:---------------:|:----------------:|:----------:|:-----------------:|:-----------------:|
+| Chrome             | 4.0 - 20.0      | &times;            | 21.0 +          | 1.0 +            | 4.0 +      | 4.0 +             | 12.0 +            |
+| Firefox            | 2.0 - 18.0      | &times;            | 22.0 +          | 1.0 +            | 4.0 +      | 3.5 +             | 10.0 +            |
+| Safari             | 3.1 - 6.1       | &times;            | 7.0 +           | 1.0 +            | 3.1 +      | 3.1 +             | 4.0 +             |
+| Opera              | &times;         | &times;            | 12.1 +          | 7.0 +            | 10.5 +     | 10.5 +            | 15.0 +            |
+| IE                 | &times;         | 10.0               | 11.0 +          | 9.0 +            | 10.0 +     | 9.0 +             | &times;           |
+| iOS Safari         | 3.2 - 6.1       | &times;            | 7.0 +           | 1.0 +            | 3.2 +      | 3.2 +             | 3.2 +             |
+| Opera Mini         | &times;         | &times;            | &times;         | 7.1 +            | &times;    | &times;           | &times;           |
+| Android Browser    | 2.1 - 4.2       | &times;            | &times;         | 1.0 +            | 2.1 +      | 2.1 +             | 3.0 +             |
+| Blackberry Browser | 7.0             | &times;            | 10.0 +          | 7.0 +            | 7.0 +      | 7.0 +             | 7.0 +             |
+| Opera Mobile       | &times;         | &times;            | 12.1 +          | 6.0 +            | 10.0 +     | 11.0 +            | 14.0 +            |
+| Android Chrome     | &times;         | &times;            | 28.0 +          | 28.0 +           | 28.0 +     | 28.0 +            | 28.0 +            |
+| Firefox Android    | &times;         | &times;            | 22.0 +          | 22.0 +           | 22.0 +     | 22.0 +            | 22.0 +            |
