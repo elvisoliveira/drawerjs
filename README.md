@@ -90,19 +90,20 @@ var drawerjs = new Drawerjs(document.body, {
 ------------------
 
 Currently this library is using [Flexbox](https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Flexible_boxes) for layout (it is not supported by old browsers, check [Caniuse](http://caniuse.com/flexbox) for more information about which browsers do support it), [2D](http://caniuse.com/transforms2d) or [3D](http://caniuse.com/transforms3d) [transforms](https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Using_CSS_transforms) to animate the content on pullback / close / open.
+
 The library is also making use of some javascript native methods like [addEventListener](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget.addEventListener) which is not supported in all browsers. To see which browser supports these features, check the table bellow:
 
-| Browser            | Flexbox *(Old)* | Flexbox *(Hybrid)* | Flexbox *(New)* | addEventListener | transition | transforms *(2D)* | transforms *(3D)* |
-| ------------------ |:---------------:|:------------------:|:---------------:|:----------------:|:----------:|:-----------------:|:-----------------:|
-| Chrome             | 4.0 - 20.0      | &times;            | 21.0 +          | 1.0 +            | 4.0 +      | 4.0 +             | 12.0 +            |
-| Firefox            | 2.0 - 18.0      | &times;            | 22.0 +          | 1.0 +            | 4.0 +      | 3.5 +             | 10.0 +            |
-| Safari             | 3.1 - 6.1       | &times;            | 7.0 +           | 1.0 +            | 3.1 +      | 3.1 +             | 4.0 +             |
-| Opera              | &times;         | &times;            | 12.1 +          | 7.0 +            | 10.5 +     | 10.5 +            | 15.0 +            |
-| IE                 | &times;         | 10.0               | 11.0 +          | 9.0 +            | 10.0 +     | 9.0 +             | &times;           |
-| iOS Safari         | 3.2 - 6.1       | &times;            | 7.0 +           | 1.0 +            | 3.2 +      | 3.2 +             | 3.2 +             |
-| Opera Mini         | &times;         | &times;            | &times;         | 7.1 +            | &times;    | &times;           | &times;           |
-| Android Browser    | 2.1 - 4.2       | &times;            | &times;         | 1.0 +            | 2.1 +      | 2.1 +             | 3.0 +             |
-| Blackberry Browser | 7.0             | &times;            | 10.0 +          | 7.0 +            | 7.0 +      | 7.0 +             | 7.0 +             |
-| Opera Mobile       | &times;         | &times;            | 12.1 +          | 6.0 +            | 10.0 +     | 11.0 +            | 14.0 +            |
-| Android Chrome     | &times;         | &times;            | 28.0 +          | 28.0 +           | 28.0 +     | 28.0 +            | 28.0 +            |
-| Firefox Android    | &times;         | &times;            | 22.0 +          | 22.0 +           | 22.0 +     | 22.0 +            | 22.0 +            |
+| Browser            | Flexbox *(Old)* | Flexbox *(New)* | addEventListener | transition | transforms *(2D)* | transforms *(3D)* |
+| ------------------ |:---------------:|:---------------:|:----------------:|:----------:|:-----------------:|:-----------------:|
+| Chrome             | 4.0 - 20.0      | 21.0 +          | 1.0 +            | 4.0 +      | 4.0 +             | 12.0 +            |
+| Firefox            | 2.0 - 18.0      | 22.0 +          | 1.0 +            | 4.0 +      | 3.5 +             | 10.0 +            |
+| Safari             | 3.1 - 6.1       | 7.0 +           | 1.0 +            | 3.1 +      | 3.1 +             | 4.0 +             |
+| Opera              | &times;         | 12.1 +          | 7.0 +            | 10.5 +     | 10.5 +            | 15.0 +            |
+| IE                 | 10.0 *(Hybrid)* | 11.0 +          | 9.0 +            | 10.0 +     | 9.0 +             | &times;           |
+| iOS Safari         | 3.2 - 6.1       | 7.0 +           | 1.0 +            | 3.2 +      | 3.2 +             | 3.2 +             |
+| Opera Mini         | &times;         | &times;         | 7.1 +            | &times;    | &times;           | &times;           |
+| Android Browser    | 2.1 - 4.2       | &times;         | 1.0 +            | 2.1 +      | 2.1 +             | 3.0 +             |
+| Blackberry Browser | 7.0             | 10.0 +          | 7.0 +            | 7.0 +      | 7.0 +             | 7.0 +             |
+| Opera Mobile       | &times;         | 12.1 +          | 6.0 +            | 10.0 +     | 11.0 +            | 14.0 +            |
+| Android Chrome     | &times;         | 28.0 +          | 28.0 +           | 28.0 +     | 28.0 +            | 28.0 +            |
+| Firefox Android    | &times;         | 22.0 +          | 22.0 +           | 22.0 +     | 22.0 +            | 22.0 +            |
