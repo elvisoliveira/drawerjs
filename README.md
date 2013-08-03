@@ -50,7 +50,6 @@ As mentioned above, you can change the default ids to the ids that you want, for
 + **content** *String / DOM Object* (Default: "#drawerjs-content") - with this option you specify the *id* o the content. There is a built in selector method that will query the DOM and get the id that you have passed, if you will not send an id you must query it and send the DOM object:
 ``` js
 var drawerjs = new Drawerjs(document.body, {
-	
 	content: document.getElementsByClassName("content")
 });
 ```
@@ -58,7 +57,6 @@ var drawerjs = new Drawerjs(document.body, {
 + **navigation** *String / DOM Object* (Default: "#drawerjs-navigation") - with this option you specify the *id* o the navigation. The behavior is the same as the *content* option has:
 ``` js
 var drawerjs = new Drawerjs(document.body, {
-	
 	navigation: document.getElementsByClassName("navigation")
 });
 ```
@@ -66,23 +64,55 @@ var drawerjs = new Drawerjs(document.body, {
 + **onOpen** *Function* - it's a function that it's triggerd each time the navigation is opened (when the content is slided out), but it is not triggered if the content slides back in case it's not dragged more than half the viewport width:
 ``` js
 var drawerjs = new Drawerjs(document.body, {
-	
 	onOpen: function () {}
 });
 ```
 + **onClose** *Function* - the same as the *onOpen* option, but with oposite behavior:
 ``` js
 var drawerjs = new Drawerjs(document.body, {
-	
 	onOpen: function () {}
 });
 ```
 + **transitioned** *Function* - this options allows you to do stuff whenever the content is transitioned, no matter if it's pulled back or closed / opened:
 ``` js
 var drawerjs = new Drawerjs(document.body, {
-	
 	transitioned: function () {}
 });
+```
+
+##### Using jQuery
+
+Drawerjs provides a jQuery plugin if you prefer to use it the jQuery way, though you will need to include `jquery.drawerjs.js` as well after you include the class:
+``` js
+$("body").drawerjs();
+```
+You can still use the library the same way as using it without jQuery:
+``` js
+$("body").drawerjs({
+	speed: 450,
+	offset: 80,
+	onOpen: function () {}
+});
+```
+
+##### Using RequireJS
+
+There is also support for AMD, you can use RequireJS to load your module async, just do not forget to add it to the `paths` object in case you use bower to install it and it is not located under the `baseUrl`:
+``` js
+requirejs.config({
+	paths: {
+		"drawerjs": "components/drawerjs.js"
+	}
+});
+```
+
+
+#### Installing
+---------------
+
+The library can be downloaded directly from Git or it can be installed with [Bower](http://bower.io/):
+``` bash
+bower install drawerjs
 ```
 
 
@@ -107,3 +137,27 @@ The library is also making use of some javascript native methods like [addEventL
 | Opera Mobile       | &times;         | 12.1 +          | 6.0 +            | 10.0 +     | 11.0 +            | 14.0 +            |
 | Android Chrome     | &times;         | 28.0 +          | 28.0 +           | 28.0 +     | 28.0 +            | 28.0 +            |
 | Firefox Android    | &times;         | 22.0 +          | 22.0 +           | 22.0 +     | 22.0 +            | 22.0 +            |
+
+Hence the class only supports:
+
++ **Chrome** *4.0 +*
++ **Firefox** *4.0 +*
++ **Safari** *3.1 +*
++ **Opera** *12.1 +*
++ **IE** *10.0 +* (Support for IE 9 might be added if it won't add too much weight to the class)
++ **iOS Safari** *3.2 +*
++ **Android Browser** *2.1 +*
++ **Blackberry Browser** *7.0 +*
++ **Opera Mobile** *12.1 +*
++ **Android Chrome** *28.0 +*
++ **Firefox Android** *22.0 +*
+
+
+#### Bugs / Feature Requests
+----------------------------
+
+I'm still working on this plugin, trying to make the code cleaner and with some comments, organizing it and increasing performance. I'm working on a better browser support and I plan on adding support for scrolling inside the menu and the content without affecting one another. Support for IE 9.0 might be added (due to the fact that there is a large usage of Windows Phones that use that version of IE) if it won't put to much weight on the plugin.
+
+API methods will be included as well, there will be just two methos for now, `open` and `close` that could be used to trigger an open / close of the menu.
+
+Please report any bugs or feature requests on the [issues](https://github.com/rolandjitsu/drawerjs/issues) page.
