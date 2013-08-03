@@ -115,8 +115,8 @@
 			return object === void 0;
 		},
 
-		isArray: function (object) {
-			return Array.isArray(object);
+		isArray: Array.isArray || function (object) {
+			return this.prototypes.object.toString.call(object) === "[object Array]";
 		},
 
 		isObject: function (object) {
