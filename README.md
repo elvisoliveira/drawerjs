@@ -48,6 +48,7 @@ There you go, you got yourself an off canvas navigation.
 As mentioned above, you can change the default ids to the ids that you want, for that there are a few options available:
 
 + **content** *String / DOM Object* (Default: "#drawerjs-content") - with this option you specify the *id* o the content. There is a built in selector method that will query the DOM and get the id that you have passed, if you will not send an id you must query it and send the DOM object:
+
 ``` js
 var drawerjs = new Drawerjs(document.body, {
 	content: document.getElementsByClassName("content")
@@ -55,6 +56,7 @@ var drawerjs = new Drawerjs(document.body, {
 ```
 + **offset** *Integer* (Default: 120) - this options will set the amount of pixels that will be visible from the content when the navigation is visible;
 + **navigation** *String / DOM Object* (Default: "#drawerjs-navigation") - with this option you specify the *id* o the navigation. The behavior is the same as the *content* option has:
+
 ``` js
 var drawerjs = new Drawerjs(document.body, {
 	navigation: document.getElementsByClassName("navigation")
@@ -62,18 +64,21 @@ var drawerjs = new Drawerjs(document.body, {
 ```
 + **speed** *Integer* (Default: 250) - this options sets the speed of the animation when the navigation is closed or opened;
 + **onOpen** *Function* - it's a function that it's triggerd each time the navigation is opened (when the content is slided out), but it is not triggered if the content slides back in case it's not dragged more than half the viewport width:
+
 ``` js
 var drawerjs = new Drawerjs(document.body, {
 	onOpen: function () {}
 });
 ```
 + **onClose** *Function* - the same as the *onOpen* option, but with oposite behavior:
+
 ``` js
 var drawerjs = new Drawerjs(document.body, {
 	onOpen: function () {}
 });
 ```
 + **transitioned** *Function* - this options allows you to do stuff whenever the content is transitioned, no matter if it's pulled back or closed / opened:
+
 ``` js
 var drawerjs = new Drawerjs(document.body, {
 	transitioned: function () {}
