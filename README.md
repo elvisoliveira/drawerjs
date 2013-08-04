@@ -85,13 +85,32 @@ var drawerjs = new Drawerjs(document.body, {
 });
 ```
 
+##### API
+
+Along with the options, the class exports two API methods as it follows:
+
++ **open** *Function* - use this method to open the navigation (slide the content out) after you have instantiated the class:
+
+``` js
+var drawerjs = new Drawerjs(document.body);
+drawerjs.open();
+```
++ **close** *Function* - the same as the *open* method, you can use this one after the class is instantiated and it can close the navigation (slide the content in):
+
+``` js
+var drawerjs = new Drawerjs(document.body);
+drawerjs.close();
+```
+
 ##### Using jQuery
 
 Drawerjs provides a jQuery plugin if you prefer to use it the jQuery way, though you will need to include `jquery.drawerjs.js` as well after you include the class:
+
 ``` js
 $("body").drawerjs();
 ```
 You can still use the library the same way as using it without jQuery:
+
 ``` js
 $("body").drawerjs({
 	speed: 450,
@@ -103,6 +122,7 @@ $("body").drawerjs({
 ##### Using RequireJS
 
 There is also support for AMD, you can use RequireJS to load your module async, just do not forget to add it to the `paths` object in case you use bower to install it and it is not located under the `baseUrl`:
+
 ``` js
 requirejs.config({
 	paths: {
@@ -116,6 +136,7 @@ requirejs.config({
 ---------------
 
 The library can be downloaded directly from Git or it can be installed with [Bower](http://bower.io/):
+
 ``` bash
 bower install drawerjs
 ```
@@ -161,8 +182,6 @@ Hence the class only supports:
 #### Bugs / Feature Requests
 ----------------------------
 
-I'm still working on this plugin, trying to make the code cleaner and with some comments, organizing it and increasing performance. I'm working on a better browser support and I plan on adding support for scrolling inside the menu and the content without affecting one another. Support for IE 9.0 might be added (due to the fact that there is a large usage of Windows Phones that use that version of IE) if it won't put to much weight on the plugin.
-
-API methods will be included as well, there will be just two methos for now, `open` and `close` that could be used to trigger an open / close of the menu.
+I'm still working on this plugin, trying to make the code cleaner and with some comments, organizing it and increasing performance. I'm working on a better browser support and I plan on adding support for scrolling inside the menu and the content without affecting one another. Support for IE 9.0 might be added (due to the fact that there is a large usage of Windows Phones that use that version of IE) if it won't add up to much weight to the plugin.
 
 Please report any bugs or feature requests on the [issues](https://github.com/rolandjitsu/drawerjs/issues) page.
