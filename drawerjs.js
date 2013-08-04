@@ -357,11 +357,31 @@
 		}
 	};
 
-	var Events = function (content, navigation, options) {
+	var slide = function (element, direction, offset, speed, fn) {
 
-		this.content = content;
-		this.navigation = navigation;
-		this.options = options;
+			var isOpen = direction === 1;
+
+			if (!utils.isUndefined(fn) && ((isOpen && !pulled) || (!isOpen && pulled))) fn.call();
+
+			utils.translate(element, isOpen ? viewport - offset : 0, speed);
+			index = isOpen ? 1 : 0;
+			pulled = isOpen ? true : false;
+		},
+		reset = function (content, navigation, offset, speed, fn) {
+
+			viewport = window.innerWidth;
+			navigation.style.width = viewport - offset + "px";
+
+			if (pulled) slide(content, 0, offset, speed, fn);
+		};
+
+	var Events = function (drawerjs) {
+
+		this.content = drawerjs.content;
+		this.navigation = drawerjs.navigation;
+		this.options = drawerjs.options;
+		this.open = drawerjs.open;
+		this.close = drawerjs.close;
 	};
 
 	Events.prototype = {
@@ -376,7 +396,7 @@
 			if (type === "touchmove") this.move(event);
 			if (type === "touchend") utils.offLoadFn(this.end(event));
 			if (type === utils.properties.transition.end) utils.offLoadFn(this.transitioned(event));
-			if (type === "resize") utils.offLoadFn(this.reset());
+			if (type === "resize") utils.offLoadFn(reset(this.content, this.navigation, this.options.offset, this.options.speed, utils.isUndefined(this.options.onClose) ? undefined : this.options.onClose));
 		},
 
 		start: function (event) {
@@ -440,32 +460,6 @@
 		transitioned: function () {
 
 			if (!utils.isUndefined(this.options.transitioned)) this.options.transitioned.call();
-		},
-
-		open: function () {
-
-			if (!pulled && !utils.isUndefined(this.options.onOpen)) this.options.onOpen.call();
-
-			utils.translate(this.content, viewport - this.options.offset, this.options.speed);
-			index = 1;
-			pulled = true;
-		},
-
-		close: function () {
-			
-			if (pulled && !utils.isUndefined(this.options.onClose)) this.options.onClose.call();
-
-			utils.translate(this.content, 0, this.options.speed);
-			index = 0;
-			pulled = false;
-		},
-
-		reset: function () {
-
-			viewport = window.innerWidth;
-			this.navigation.style.width = viewport - this.options.offset + "px";
-
-			if (pulled) this.close();
 		}
 	};
 
@@ -489,7 +483,7 @@
 
 		if (!utils.isElement(this.element) || !utils.browser.supports.addEventListener || !isAnyFlex) return;
 
-		var events = new Events(this.content, this.navigation, this.options),
+		var events = new Events(this),
 			style = {
 				element: this.element.style,
 				content: this.content.style,
@@ -516,7 +510,14 @@
 
 	Drawerjs.prototype = {
 
-		constructor: Drawerjs
+		constructor: Drawerjs,
+		open: function () {
+
+			return slide(this.content, 1, this.options.offset, this.options.speed, utils.isUndefined(this.options.onOpen) ? undefined : this.options.onOpen);
+		},
+		close: function () {
+			return slide(this.content, 0, this.options.offset, this.options.speed, utils.isUndefined(this.options.onClose) ? undefined : this.options.onClose);
+		}
 	};
 
 
