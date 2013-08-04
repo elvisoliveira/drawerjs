@@ -24,7 +24,6 @@
 			content: "#drawerjs-content",
 			offset: 120,
 			navigation: "#drawerjs-navigation",
-			scrolling: true,
 			speed: 250
 		};
 
@@ -174,11 +173,11 @@
 				iterator = this.prototypes.array.slice.call(args, 1);
 
 			this.each(iterator, function (source) {
-				if (source) {
-					this.each(source, function (prop, key) {
-						object[key] = source[key];
-					});
-				}
+
+				if (!source) return;
+				this.each(source, function (prop, key) {
+					object[key] = source[key];
+				});
 			}, this);
 
 			return object;
@@ -329,14 +328,12 @@
 		},
 
 		flexdisplay: function () {
-
 			if (this.browser.supports.flexbox) return this.hyphen(this.prefixed("flex"));
 			if (this.browser.supports.flexboxlegacy) return this.hyphen(this.prefixed("box"));
 			if (this.browser.supports.flexboxhybrid) return this.hyphen(this.prefixed("flexbox"));
 		},
 
 		flexlength: function () {
-
 			if (this.browser.supports.flexbox) return this.prefixed("flex");
 			if (this.browser.supports.flexboxlegacy) return this.prefixed("boxFlex");
 		},
@@ -346,10 +343,9 @@
 			var style = element.style,
 				property = this.properties.transition.property,
 				transition = style[property],
-				duration = this.properties.transition.duration,
 				transform = this.properties.transform.js;
 
-			style[duration] = speed + "ms";
+			style[this.properties.transition.duration] = speed + "ms";
 			if (this.isEmpty(transition) || transition !== property) style[property] = this.properties.transform.css;
 
 			if (this.browser.supports.transforms) {
@@ -361,9 +357,10 @@
 		}
 	};
 
-	var Events = function (element, options) {
+	var Events = function (content, navigation, options) {
 
-		this.element = element;
+		this.content = content;
+		this.navigation = navigation;
 		this.options = options;
 	};
 
@@ -395,17 +392,13 @@
 			isScrolling = undefined;
 			delta = {};
 
-			this.element.addEventListener("touchmove", this, false);
-			this.element.addEventListener("touchend", this, false);
+			this.content.addEventListener("touchmove", this, false);
+			this.content.addEventListener("touchend", this, false);
 		},
 
 		move: function (event) {
 
 			if (event.touches.length > 1 || event.scale && event.scale !== 1) return;
-
-			if (utils.isUndefined(this.options.scrolling) === false && this.options.scrolling === false) {
-				event.preventDefault();
-			}
 
 			var touches = event.touches[0];
 
@@ -414,17 +407,14 @@
 				y: touches.pageY - start.y
 			};
 
-			if (utils.isUndefined(isScrolling)) {
-				isScrolling = !!(isScrolling || Math.abs(delta.x) < Math.abs(delta.y));
-			}
-
+			if (utils.isUndefined(isScrolling)) isScrolling = !!(isScrolling || Math.abs(delta.x) < Math.abs(delta.y));
 			if (isScrolling) return;
 
 			event.preventDefault();
 
 			if ((delta.x < 0 && index === 0) || (delta.x > 0 && index === 1)) return;
 
-			utils.translate(this.element, index === 1 ? viewport - Math.abs(delta.x) - this.options.offset: delta.x, 0);
+			utils.translate(this.content, index === 1 ? viewport - Math.abs(delta.x) - this.options.offset: delta.x, 0);
 		},
 
 		end: function () {
@@ -433,7 +423,7 @@
 				isPastHalf = Number(duration) < 250 && Math.abs(delta.x) > 20 || Math.abs(delta.x) > viewport / 2,
 				left = delta.x < 0,
 				right = utils.isEmpty(delta) || delta.x > 0,
-				isRightPastCenter = this.element.getBoundingClientRect().left > viewport / 2;
+				isRightPastCenter = this.content.getBoundingClientRect().left > viewport / 2;
 
 			if (isScrolling) return;
 
@@ -443,8 +433,8 @@
 				this.close();
 			}
 
-			this.element.removeEventListener("touchmove", this, false);
-			this.element.removeEventListener("touchend", this, false);
+			this.content.removeEventListener("touchmove", this, false);
+			this.content.removeEventListener("touchend", this, false);
 		},
 
 		transitioned: function () {
@@ -456,7 +446,7 @@
 
 			if (!pulled && !utils.isUndefined(this.options.onOpen)) this.options.onOpen.call();
 
-			utils.translate(this.element, viewport - this.options.offset, this.options.speed);
+			utils.translate(this.content, viewport - this.options.offset, this.options.speed);
 			index = 1;
 			pulled = true;
 		},
@@ -465,7 +455,7 @@
 			
 			if (pulled && !utils.isUndefined(this.options.onClose)) this.options.onClose.call();
 
-			utils.translate(this.element, 0, this.options.speed);
+			utils.translate(this.content, 0, this.options.speed);
 			index = 0;
 			pulled = false;
 		},
@@ -473,6 +463,7 @@
 		reset: function () {
 
 			viewport = window.innerWidth;
+			this.navigation.style.width = viewport - this.options.offset + "px";
 
 			if (pulled) this.close();
 		}
@@ -498,7 +489,7 @@
 
 		if (!utils.isElement(this.element) || !utils.browser.supports.addEventListener || !isAnyFlex) return;
 
-		var events = new Events(this.content, this.options),
+		var events = new Events(this.content, this.navigation, this.options),
 			style = {
 				element: this.element.style,
 				content: this.content.style,
@@ -515,12 +506,12 @@
 		style.element.overflowX = "hidden";
 		style.content[utils.properties.flex.length] = "1";
 		utils.translate(this.content, 0, 0);
+		style.navigation.width = viewport - this.options.offset + "px";
 		style.element.visibility = "visible";
 
 		if (utils.browser.supports.touch) this.content.addEventListener("touchstart", events, false);
 		if (utils.browser.supports.transition) this.content.addEventListener(utils.properties.transition.end, events, false);
-
-		window.addEventListener("resize", this, false);
+		window.addEventListener("resize", events, false);
 	};
 
 	Drawerjs.prototype = {
