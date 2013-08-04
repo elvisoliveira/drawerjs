@@ -21,7 +21,6 @@
 		index = 0;
 
 	var defaults = {
-
 			content: "#drawerjs-content",
 			offset: 120,
 			navigation: "#drawerjs-navigation",
@@ -379,7 +378,7 @@
 			if (type === "touchstart") this.start(event);
 			if (type === "touchmove") this.move(event);
 			if (type === "touchend") utils.offLoadFn(this.end(event));
-			if (utils.properties.transition.end) utils.offLoadFn(this.transitioned(event));
+			if (type === utils.properties.transition.end) utils.offLoadFn(this.transitioned(event));
 			if (type === "resize") utils.offLoadFn(this.reset());
 		},
 
@@ -519,7 +518,7 @@
 		style.element.visibility = "visible";
 
 		if (utils.browser.supports.touch) this.content.addEventListener("touchstart", events, false);
-		if (utils.browser.supports.transitions) this.content.addEventListener(utils.properties.transition.end, events, false);
+		if (utils.browser.supports.transition) this.content.addEventListener(utils.properties.transition.end, events, false);
 
 		window.addEventListener("resize", this, false);
 	};

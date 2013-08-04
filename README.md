@@ -1,7 +1,7 @@
 ### [Drawerjs](http://codepen.io/rolandjitsu/pen/CgmGd)
 =======================================================
 
-> A simple off canvas navigation build with JavaScript &amp; CSS3. It's library agnostic, provides support for jQuery and AMD and it's simple to set up and use.
+> A simple off canvas navigation built with JavaScript &amp; CSS3. It's library agnostic, provides support for jQuery and AMD and it's simple to set up and use.
 
 
 #### Documentaion
