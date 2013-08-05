@@ -2,7 +2,7 @@
 > A simple off canvas navigation built with JavaScript &amp; CSS3. It's library agnostic, provides support for jQuery and AMD and it's simple to set up and use.
 
 
-## Documentation
+### Documentation
 -----------------
 To have a brief idea about what this library does, I'll describe it to you in a few words. If you have an iOS device or Google Maps on your mobile device you have definitely used the left side navigation. The one that you touch and drag to reveal it's contents. Well, this library does pretty much the same thing, it turns the layout it's required to have into a sliding navigation.
 
@@ -139,7 +139,7 @@ requirejs.config({
 });
 ```
 
-## Installing
+### Installing
 ---------------
 The library can be downloaded directly from Git or it can be installed with [Bower](http://bower.io/):
 
@@ -148,7 +148,7 @@ bower install drawerjs
 ```
 
 
-## Compatibility
+### Compatibility
 ------------------
 Currently this library is using [Flexbox](https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Flexible_boxes) for layout (it is not supported by old browsers, check [Caniuse](http://caniuse.com/flexbox) for more information about which browsers do support it), [2D](http://caniuse.com/transforms2d) or [3D](http://caniuse.com/transforms3d) [transforms](https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Using_CSS_transforms) to animate the content on pullback / close / open.
 
@@ -184,7 +184,7 @@ Hence the class only supports:
 + **Firefox Android** *22.0 +*
 
 
-## Bugs / Feature Requests
+### Bugs / Feature Requests
 ----------------------------
 I'm still working on this plugin, trying to make the code cleaner and with some comments, organizing it and increasing performance. I'm working on a better browser support and I plan on adding support for scrolling inside the menu and the content without affecting one another. Support for IE 9.0 might be added (due to the fact that there is a large usage of Windows Phones that use that version of IE) if it won't add up to much weight to the plugin.
 
