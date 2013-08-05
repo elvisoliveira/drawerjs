@@ -10,8 +10,7 @@
 ##### Usage
 
 There are some prerequisites in order to instantiate the **Drawerjs** class or to initiate the **jQuery** plugin. It needs the following HTML structure:
-
-``` html
+```html
 <body>
 	<nav id="drawerjs-navigation" class="drawerjs-navigation">
 	    <ul>
@@ -26,8 +25,7 @@ There are some prerequisites in order to instantiate the **Drawerjs** class or t
 </body>
 ```
 Using the `drawerjs-navigation` and `drawerjs-content` ids isn't required, but if you choose to, you will need to specify that in the options. As far as the classes go, it needs a minimum setup:
-
-``` css
+```css
 body {
     visibility: hidden;
 }
@@ -37,8 +35,7 @@ body {
 }
 ```
 At this point you can instantiate the class:
-
-``` js
+```js
 var drawerjs = new Drawerjs(document.body);
 ```
 There you go, you got yourself an off canvas navigation.
@@ -48,38 +45,33 @@ There you go, you got yourself an off canvas navigation.
 As mentioned above, you can change the default ids to the ids that you want, for that there are a few options available:
 
 + **content** *String / DOM Object* (Default: "#drawerjs-content") - with this option you specify the *id* o the content. There is a built in selector method that will query the DOM and get the id that you have passed, if you will not send an id you must query it and send the DOM object:
-
-``` js
+```js
 var drawerjs = new Drawerjs(document.body, {
 	content: document.getElementsByClassName("content")
 });
 ```
 + **offset** *Integer* (Default: 120) - this options will set the amount of pixels that will be visible from the content when the navigation is visible;
 + **navigation** *String / DOM Object* (Default: "#drawerjs-navigation") - with this option you specify the *id* o the navigation. The behavior is the same as the *content* option has:
-
-``` js
+```js
 var drawerjs = new Drawerjs(document.body, {
 	navigation: document.getElementsByClassName("navigation")
 });
 ```
 + **speed** *Integer* (Default: 250) - this options sets the speed of the animation when the navigation is closed or opened;
 + **onOpen** *Function* - it's a function that it's triggerd each time the navigation is opened (when the content is slided out), but it is not triggered if the content slides back in case it's not dragged more than half the viewport width:
-
-``` js
+```js
 var drawerjs = new Drawerjs(document.body, {
 	onOpen: function () {}
 });
 ```
 + **onClose** *Function* - the same as the *onOpen* option, but with oposite behavior:
-
-``` js
+```js
 var drawerjs = new Drawerjs(document.body, {
 	onOpen: function () {}
 });
 ```
 + **transitioned** *Function* - this options allows you to do stuff whenever the content is transitioned, no matter if it's pulled back or closed / opened:
-
-``` js
+```js
 var drawerjs = new Drawerjs(document.body, {
 	transitioned: function () {}
 });
@@ -90,40 +82,45 @@ var drawerjs = new Drawerjs(document.body, {
 Along with the options, the class exports two API methods as it follows:
 
 + **open** *Function* - use this method to open the navigation (slide the content out) after you have instantiated the class:
-
-``` js
+```js
 var drawerjs = new Drawerjs(document.body);
 drawerjs.open();
 ```
 + **close** *Function* - the same as the *open* method, you can use this one after the class is instantiated and it can close the navigation (slide the content in):
-
-``` js
+```js
 var drawerjs = new Drawerjs(document.body);
 drawerjs.close();
 ```
 
-##### Using jQuery
+##### Using jQuery / Zepto
 
 Drawerjs provides a jQuery plugin if you prefer to use it the jQuery way, though you will need to include `jquery.drawerjs.js` as well after you include the class:
-
-``` js
+```js
 $("body").drawerjs();
 ```
 You can still use the library the same way as using it without jQuery:
-
-``` js
+```js
 $("body").drawerjs({
 	speed: 450,
 	offset: 80,
 	onOpen: function () {}
 });
 ```
+Calling the API methods would be the same as initiating the plugin, but instead of passing the options object you will pass a string with the API method:
+```js
+$("body").drawerjs("open");
+```
+The options can also be overwritten after you load the library and the jQuery plugin as such:
+```js
+$.fn.drawerjs.defaults = {
+	speed: 350
+};
+```
 
 ##### Using RequireJS
 
 There is also support for AMD, you can use RequireJS to load your module async, just do not forget to add it to the `paths` object in case you use bower to install it and it is not located under the `baseUrl`:
-
-``` js
+```js
 requirejs.config({
 	paths: {
 		"drawerjs": "components/drawerjs.js"
@@ -136,8 +133,7 @@ requirejs.config({
 ---------------
 
 The library can be downloaded directly from Git or it can be installed with [Bower](http://bower.io/):
-
-``` bash
+```bash
 bower install drawerjs
 ```
 
