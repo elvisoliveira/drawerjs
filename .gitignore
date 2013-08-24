@@ -35,23 +35,3 @@ results
 
 npm-debug.log
 node_modules
-
-
-### Heroku ###
-*.env
-
-
-### Bower ###
-components
-
-
-### Temporary ###
-
-*.txt
-*.bowerrc
-*.jshintignore
-*jshintrc
-*.nodemonignore
-Gruntfile.js
-package.json
-Procfile
