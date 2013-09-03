@@ -17,14 +17,10 @@ module.exports = function (grunt) {
 		 */
 		
 		jshint: {
-			
 			options: {
-				force: false,
 				jshintrc: ".jshintrc"
 			},
-
 			static: ["drawer.js", "*.drawer.js"],
-
 			server: [
 
 				"*.js",

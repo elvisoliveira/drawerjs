@@ -1,12 +1,12 @@
 # [Drawerjs](http://codepen.io/rolandjitsu/pen/CgmGd)
 > A simple off canvas navigation built with JavaScript &amp; CSS3. It's library agnostic, provides support for jQuery and AMD and it's simple to set up and use.
 
-
-### Documentation
------------------
 To have a brief idea about what this library does, I'll describe it to you in a few words. If you have an iOS device or Google Maps on your mobile device you have definitely used the left side navigation. The one that you touch and drag to reveal it's contents. Well, this library does pretty much the same thing, it turns the layout it's required to have into a sliding navigation.
 
 It could also be used a simple click and open navigation too as the library provides two API methods that you can use to open / close the menu manually.
+
+### Documentation
+-----------------
 
 #### Usage
 There are some prerequisites in order to instantiate the **Drawerjs** class or to initiate the **jQuery** plugin. It needs the following HTML structure:
