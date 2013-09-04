@@ -11,7 +11,7 @@ module.exports = function (grunt) {
 
 	grunt.config.init({
 
-		package: grunt.file.readJSON('package.json'),
+		package: grunt.file.readJSON("package.json"),
 
 
 		/**
@@ -60,7 +60,7 @@ module.exports = function (grunt) {
 			},
 			drawerjq: {
 				files: {
-					"./dist/jquery.drawer.min.js": ["./src/drawer.js", "/src/jquery.drawer.js"]
+					"./dist/jquery.drawer.min.js": ["./src/drawer.js", "./src/jquery.drawer.js"]
 				}
 			}
 		}

@@ -15,7 +15,7 @@
 	"trailing": true,
 	"maxparams": 6,
 	"maxdepth": 4,
-	"maxcomplexity": 4,
+	"maxcomplexity": 12,
 	"maxlen": 240,
 	"eqnull": true,
 	"browser": true,
@@ -27,11 +27,8 @@
 
 	"globals": {
 
-		"Drawerjs": true,
+		"Drawer": true,
 		"define": true,
 		"DocumentTouch": true
-	},
-
-	"-W015": false,
-	"-W074": false
+	}
 }
