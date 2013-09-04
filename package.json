@@ -7,10 +7,11 @@
 	"description": "A simple off canvas navigation built with JavaScript & CSS3. It's library agnostic, provides support for jQuery and AMD and it's simple to set up and use.",
 
 	"scripts": {
+		"start": "grunt build",
 		"test": "grunt test"
 	},
 
-	"main": "cluster.js",
+	"main": "./src/drawer.js",
 	
 	"repository": {
 		"type": "git",
@@ -37,7 +38,8 @@
 	
 	"devDependencies": {
 		"grunt": "0.4.1",
-		"grunt-contrib-jshint": "0.6.4"
+		"grunt-contrib-jshint": "0.6.4",
+		"grunt-contrib-uglify": "0.2.4"
 	},
 
 	"license": {
