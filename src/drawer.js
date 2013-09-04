@@ -532,15 +532,11 @@
 		if (browser.supports.touch || browser.supports.pointers) this.events.content.addEventListener(browser.supports.touch ? "touchstart" : "MSPointerDown", this.events, false);
 
 		return {
-			close: utils.bind(function () {
-				return this.events.close();
-			}, this),
+			close: utils.bind(this.events.close, this.events),
 			content: this.events.content,
 			element: this.events.element,
 			navigation: this.events.navigation,
-			open: utils.bind(function () {
-				return this.events.open();
-			}, this),
+			open: utils.bind(this.events.open, this.events),
 			options: this.events.options,
 			version: version
 		};
