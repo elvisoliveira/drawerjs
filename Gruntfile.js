@@ -55,11 +55,7 @@ module.exports = function (grunt) {
 			},
 			drawer: {
 				files: {
-					"./dist/drawer.min.js": ["./src/drawer.js"]
-				}
-			},
-			drawerjq: {
-				files: {
+					"./dist/drawer.min.js": ["./src/drawer.js"],
 					"./dist/jquery.drawer.min.js": ["./src/drawer.js", "./src/jquery.drawer.js"]
 				}
 			}
@@ -85,8 +81,7 @@ module.exports = function (grunt) {
 	]);
 
 	grunt.registerTask("build", [
-		"uglify:drawer",
-		"uglify:drawerjq"
+		"uglify:drawer"
 	]);
 
 	grunt.registerTask("test", ["lint"]);
