@@ -1,12 +1,19 @@
 /**
+ *
  * Drawer 2.0.0
  *
- * Website: http://drawerjs.rolandjitsu.com
- * License: MIT | Copyright (c) 2013 Rolandjitsu
- * 
+ * A simple off canvas navigation built with JavaScript & CSS3. It's library agnostic, provides support for jQuery and AMD and it's simple to set up and use.
+ *
+ * Website: http://drawerjs.rolandjitsu.com/
+ * Repository: https://github.com/rolandjitsu/drawerjs.git
+ * Bugs: https://github.com/rolandjitsu/drawerjs/issues
+ *
+ * Copyright (c) 2013 Rolandjitsu
+ * License MIT: https://github.com/rolandjitsu/drawerjs/blob/master/LICENSE.md 
+ *
  */
 
-;(function (window, document, undefined) {
+(function (window, document, undefined) {
 
 
 	/**
