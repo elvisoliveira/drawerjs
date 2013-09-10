@@ -2,31 +2,38 @@
  * Server Initialization Script | Startup Application
  */
 
-var path = require("path"),
-	cluster = require("cluster"),
-	os = require("os");
+var Cluster = function (configuration, application, silent) {
 
+	this.configuration = require(this.path.resolve(__dirname, "config.js"));
+	this.application = this.path.resolve(__dirname, "docs");
+	this.silent = this.configuration.server.state.development ? false : true;
 
-/**
- * Cluster Configuration
- */
-
-cluster.setupMaster({
-	args: [JSON.stringify(require(path.resolve(__dirname, "config.js")))],
-	exec: path.resolve(__dirname, "docs"),
-	silent: false
-});
-
-if (cluster.isMaster) {
-
-	var i = os.cpus().length - 1;
-
-	while (i >= 0) {
-		cluster.fork();;
-		i--;
-	}
-
-	cluster.on("exit", function (worker, code) {		
-		if (code !== 0) cluster.fork();
+	this.module.setupMaster({
+		args: [JSON.stringify(configuration || this.configuration)],
+		exec: application || this.application,
+		silent: silent || this.silent
 	});
-}
+
+	if (this.module.isMaster) this.start();
+};
+
+Cluster.prototype = {
+	path: require("path"),
+	os: require("os"),
+	module:  require("cluster"),
+	start: function () {
+
+		var i = this.os.cpus().length - 1;
+
+		while (i >= 0) {
+			this.module.fork();;
+			i--;
+		}
+
+		this.module.on("exit", function (worker, code) {		
+			if (code !== 0) this.module.fork();
+		});
+	}
+};
+
+var cluster = new Cluster();
