@@ -16,7 +16,7 @@
 	"maxparams": 6,
 	"maxdepth": 4,
 	"maxcomplexity": 12,
-	"maxlen": 240,
+	"maxlen": 360,
 	"eqnull": true,
 	"browser": true,
 	"devel": true,
@@ -27,8 +27,9 @@
 
 	"globals": {
 
-		"Drawer": true,
+		"CSS": true,
 		"define": true,
-		"DocumentTouch": true
+		"DocumentTouch": true,
+		"Drawer": true
 	}
 }

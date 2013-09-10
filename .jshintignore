@@ -1,1 +1,5 @@
 # Ignore Minified Files #
+
+dist/**/*.min.js
+public/**/*.min.js
+public/js/vendor/**/*.js

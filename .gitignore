@@ -16,7 +16,7 @@ ehthumbs.db
 Desktop.ini
 
 # Recycle Bin used on file shares
-$RECYCLE.BIN/
+$RECYCLE.BIN/**
 
 
 ### NodeJS ###
@@ -28,10 +28,18 @@ $RECYCLE.BIN/
 *.pid
 *.gz
 
-lib-cov
-pids
-logs
-results
+lib-cov/**
+pids/**
+logs/**
+results/**
 
 npm-debug.log
-node_modules
+node_modules/**
+
+
+### Heroku ###
+*.env
+
+
+### Bower ###
+components/**
