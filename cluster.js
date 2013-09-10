@@ -21,6 +21,9 @@ Cluster.prototype = {
 	path: require("path"),
 	os: require("os"),
 	module:  require("cluster"),
+	refork: function (worker, code) {
+		if (code !== 0) this.module.fork();
+	},
 	start: function () {
 
 		var i = this.os.cpus().length - 1;
@@ -30,10 +33,8 @@ Cluster.prototype = {
 			i--;
 		}
 
-		this.module.on("exit", function (worker, code) {		
-			if (code !== 0) this.module.fork();
-		});
+		this.module.on("exit", this.refork.bind(this));
 	}
 };
 
-var cluster = new Cluster();
+var cluster = new Cluster(false, false, true);
