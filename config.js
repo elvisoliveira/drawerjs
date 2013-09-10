@@ -9,7 +9,7 @@ var path = require("path"),
 
 var Configuration = function () {
 
-	this.environment = this.variables();
+	this.environment = this.configvars();
 	this.package = require(path.resolve(__dirname, "package.json"));
 
 	this.bower = {};
@@ -18,7 +18,7 @@ var Configuration = function () {
 
 	this.server = {};
 	this.server.process = {};
-	this.server.process.environment = this.environment.NODE_ENV || process.env.NODE_ENV;
+	this.server.process.environment = this.environment ? this.environment.NODE_ENV : process.env.NODE_ENV;
 	this.server.state = {};
 	this.server.state.development = this.server.process.environment === "development" ? true : false;
 	this.server.state.production = this.server.process.environment === "production" ? true : false;
@@ -28,7 +28,7 @@ var Configuration = function () {
 	this.server.cookie.secure = false;
 	this.server.environment = {};
 	this.server.environment.development = {};
-	this.server.environment.development.port =  this.environment.PORT || process.env.PORT;
+	this.server.environment.development.port = this.environment ? this.environment.PORT : process.env.PORT;
 	this.server.environment.production = {};
 	this.server.environment.production.port = process.env.PORT;
 	this.server.static = {};
@@ -46,14 +46,15 @@ var Configuration = function () {
 };
 
 Configuration.prototype = {
+	configvars: function () {
 
-	variables: function () {
+		var object = {},
+			env = path.resolve(__dirname, ".env"),
+			pattern = function ($0, $1, $2, $3) {
+				object[$1] = $3 ? Number($3) : $2;
+			};
 
-		var object = {};
-
-		fs.readFileSync(path.resolve(__dirname, ".env"), "utf8").replace(/(\w+)=((\d+)|.+)/g, function ($0, $1, $2, $3) {
-			object[$1] = $3 ? Number($3) : $2;
-		});
+		if (fs.existsSync(env)) fs.readFileSync(env, "utf8").replace(/(\w+)=((\d+)|.+)/g, pattern);
 
 		return object;
 	}
