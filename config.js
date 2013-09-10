@@ -56,7 +56,9 @@ Configuration.prototype = {
 
 		if (fs.existsSync(env)) fs.readFileSync(env, "utf8").replace(/(\w+)=((\d+)|.+)/g, pattern);
 
-		return object;
+		var size = object === null || object === void 0 ? 0 : Array.isArray(object) || (typeof object === "string" || object instanceof String) ? object.length : Object.keys(object).length;
+
+		return size === 0 ? undefined : object;
 	}
 };
 

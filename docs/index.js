@@ -133,9 +133,7 @@ application.get("*", routes.index);
  * Create Express Server
  */
 
-//console.log(config.server.environment[config.server.process.environment].port);
-
 var server,
 	http = require("http");
 
-server = http.createServer(application).listen(config.server.environment["production"].port);
+server = http.createServer(application).listen(config.server.environment[config.server.process.environment].port);
