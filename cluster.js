@@ -2,39 +2,31 @@
  * Server Initialization Script | Startup Application
  */
 
-var Cluster = function (configuration, application, silent) {
+var path = require("path"),
+	cluster = require("cluster"),
+	os = require("os");
 
-	this.configuration = require(this.path.resolve(__dirname, "config.js"));
-	this.application = this.path.resolve(__dirname, "docs");
-	this.silent = this.configuration.server.state.development ? false : true;
 
-	this.module.setupMaster({
-		args: [JSON.stringify(configuration || this.configuration)],
-		exec: application || this.application,
-		silent: silent || this.silent
-	});
+/**
+ * Cluster Configuration
+ */
 
-	if (this.module.isMaster) this.start();
-};
+cluster.setupMaster({
+	args: [JSON.stringify(require(path.resolve(__dirname, "config.js")))],
+	exec: path.resolve(__dirname, "docs"),
+	silent: false
+});
 
-Cluster.prototype = {
-	path: require("path"),
-	os: require("os"),
-	module:  require("cluster"),
-	refork: function (worker, code) {
-		if (code !== 0) this.module.fork();
-	},
-	start: function () {
+if (cluster.isMaster) {
 
-		var i = this.os.cpus().length - 1;
+	var i = os.cpus().length - 1;
 
-		while (i >= 0) {
-			this.module.fork();;
-			i--;
-		}
-
-		this.module.on("exit", this.refork.bind(this));
+	while (i >= 0) {
+		cluster.fork();;
+		i--;
 	}
-};
 
-var cluster = new Cluster(false, false, true);
+	cluster.on("exit", function (worker, code) {		
+		if (code !== 0) cluster.fork();
+	});
+}
