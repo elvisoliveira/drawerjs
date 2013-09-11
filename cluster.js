@@ -7,26 +7,24 @@ var path = require("path"),
 	os = require("os");
 
 
-/**
- * Cluster Configuration
- */
-
 cluster.setupMaster({
 	args: [JSON.stringify(require(path.resolve(__dirname, "config.js")))],
 	exec: path.resolve(__dirname, "docs"),
 	silent: false
 });
 
+
 if (cluster.isMaster) {
 
-	var i = os.cpus().length - 1;
+	var i = os.cpus().length - 1,
+		restart = function (worker, code) {		
+			if (code !== 0) cluster.fork();
+		};
 
 	while (i >= 0) {
 		cluster.fork();;
 		i--;
 	}
 
-	cluster.on("exit", function (worker, code) {		
-		if (code !== 0) cluster.fork();
-	});
+	cluster.on("exit", restart);
 }

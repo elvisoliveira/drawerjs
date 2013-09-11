@@ -36,16 +36,13 @@ var Configuration = function () {
 	this.server.static.destination = "assets";
 	this.server.static.source = "public";
 
+	var uri = url.parse(this.configvars ? this.configvars.REDISCLOUD_URL : process.env.REDISCLOUD_URL);
+	
 	this.databses = {};
 	this.databses.redis = {};
-
-	var uri = url.parse(this.configvars ? this.configvars.REDISCLOUD_URL : process.env.REDISCLOUD_URL);
-
 	this.databses.redis.host = uri.hostname;
 	this.databses.redis.port = uri.port
 	this.databses.redis.auth = uri.auth.split(":")[1];
-
-	console.log(this.databses);
 
 	this.application = {};
 	this.application.analytics = {};
@@ -56,6 +53,7 @@ var Configuration = function () {
 	this.application.favicons.touch = "touch";
 	this.application.favicons.startup = "startup";
 };
+
 
 Configuration.prototype = {
 	getConfigVars: function () {
