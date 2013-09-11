@@ -16,6 +16,15 @@ var routes = require(path.resolve(__dirname, "controllers", "routes")),
 var cluster = require("cluster"),
 	worker = cluster.worker;
 
+var RedisSessionStore = require("connect-redis")(express),
+	redis = new RedisSessionStore({
+		host: config.databses.redis.host,
+		port: config.databses.redis.port,
+		pass: config.databses.redis.auth,
+		no_ready_check: true,
+		ttl: 60*60
+	});
+
 
 /**
  * Express Template Engine / Environment
@@ -90,7 +99,8 @@ application.configure(function () {
 		cookie: {
 			httpOnly: config.server.cookie.http,
 			secure: config.server.cookie.secure
-		}
+		},
+		store: redis
 	}));
 	application.use(express.csrf());
 

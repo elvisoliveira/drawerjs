@@ -4,12 +4,13 @@
 
 var path = require("path"),
 	fs = require("fs"),
-	crypto = require("crypto");
+	crypto = require("crypto"),
+	url = require("url");
 
 
 var Configuration = function () {
 
-	this.environment = this.configvars();
+	this.configvars = this.getConfigVars();
 	this.package = require(path.resolve(__dirname, "package.json"));
 
 	this.bower = {};
@@ -18,7 +19,7 @@ var Configuration = function () {
 
 	this.server = {};
 	this.server.process = {};
-	this.server.process.environment = this.environment ? this.environment.NODE_ENV : process.env.NODE_ENV;
+	this.server.process.environment = this.configvars ? this.configvars.NODE_ENV : process.env.NODE_ENV;
 	this.server.state = {};
 	this.server.state.development = this.server.process.environment === "development" ? true : false;
 	this.server.state.production = this.server.process.environment === "production" ? true : false;
@@ -28,12 +29,23 @@ var Configuration = function () {
 	this.server.cookie.secure = false;
 	this.server.environment = {};
 	this.server.environment.development = {};
-	this.server.environment.development.port = this.environment ? this.environment.PORT : process.env.PORT;
+	this.server.environment.development.port = this.configvars ? this.configvars.PORT : process.env.PORT;
 	this.server.environment.production = {};
 	this.server.environment.production.port = process.env.PORT;
 	this.server.static = {};
 	this.server.static.destination = "assets";
 	this.server.static.source = "public";
+
+	this.databses = {};
+	this.databses.redis = {};
+
+	var uri = url.parse(this.configvars ? this.configvars.REDISCLOUD_URL : process.env.REDISCLOUD_URL);
+
+	this.databses.redis.host = uri.hostname;
+	this.databses.redis.port = uri.port
+	this.databses.redis.auth = uri.auth.split(":")[1];
+
+	console.log(this.databses);
 
 	this.application = {};
 	this.application.analytics = {};
@@ -46,7 +58,7 @@ var Configuration = function () {
 };
 
 Configuration.prototype = {
-	configvars: function () {
+	getConfigVars: function () {
 
 		var object = {},
 			env = path.resolve(__dirname, ".env"),
