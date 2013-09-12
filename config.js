@@ -49,7 +49,7 @@ var Configuration = function () {
 	this.application.analytics.domain = "drawerjs.rolandjitsu.com";
 	this.application.analytics.id = "UA-39362355-4";
 	this.application.favicons = {};
-	this.application.favicons.directory = "img";
+	this.application.favicons.directory = "ico";
 	this.application.favicons.touch = "touch";
 	this.application.favicons.startup = "startup";
 };

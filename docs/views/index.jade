@@ -1,5 +1,14 @@
 extends layout
 
-block content
+block container
+	nav(id="drawer-navigation", class="drawer-navigation")
+		ul
+			li
+				a
+					i(class="icon-dashboard") Dashboard
+	section(id="drawer-content", class="drawer-content")
+		header(id="header", class="header")
+			span(id="open-navigation-trigger", class="button")
+			h1 Drawer
 
-	h1 Hello World
+		article(class="content", data-ng-view)

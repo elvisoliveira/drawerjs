@@ -1,11 +1,26 @@
 {
 	"name": "Drawer",
 	"version": "2.0.0",
-	"main": "./src/drawer.js",
+	"main": ["./src/drawer.js", "./src/jquery.drawer.js"],
 
 	"devDependencies": {
 		"google-code-prettify": "1.0.0",
-		"jquery": "2.0.3",
-		"angular": "1.2.0-rc.2"
+		"angular": "1.2.0-rc.2",
+		"angular-route": "1.2.0-rc.2",
+		"angular-animate": "1.2.0-rc.2",
+		"drawerjs": "2.0.0"
+	},
+
+	"exportsOverride": {
+		"google-code-prettify": {
+			"/js/vendor/": "**/prettify.js",
+			"/css/libs/": "**/sons-of-obsidian.css"
+		},		
+		"drawerjs": {
+			"/js/vendor/": "**/drawer.min.js"	
+		},
+		"*": {
+			"/js/vendor/": "**/*.js"	
+		}
 	}
 }

@@ -4,5 +4,5 @@
 
 module.exports = function (grunt) {
 	grunt.registerTask("lint", ["jshint:static", "jshint:server"]);
-	grunt.registerTask("test", ["lint", "karma:single"]);
+	grunt.registerTask("test", ["lint"]);
 };

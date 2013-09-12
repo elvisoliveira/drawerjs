@@ -5,8 +5,7 @@
 module.exports = function (grunt) {
 
 	var config = {
-			package: grunt.file.readJSON("package.json"),
-			env: process.env
+			package: grunt.file.readJSON("package.json")
 		},
 		glob = require("glob"),
 		options = function (path) {
@@ -22,7 +21,7 @@ module.exports = function (grunt) {
 			return object;
 		};
 
-	grunt.config.init(grunt.util._.extend(config, options("./tasks/options/")));
+	grunt.config.init(grunt.util._.extend(config, options("./tasks/config/")));
 	require("load-grunt-tasks")(grunt);
 	grunt.loadTasks("tasks");
 };
