@@ -2,6 +2,8 @@
  * Server Initialization Script | Startup Application
  */
 
+if (process.env.NODETIME_ACCOUNT_KEY) require("nodetime").profile({ accountKey: process.env.NODETIME_ACCOUNT_KEY, appName: "drawerjs" });
+
 var path = require("path"),
 	cluster = require("cluster"),
 	os = require("os");
