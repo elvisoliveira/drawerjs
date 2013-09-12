@@ -33,6 +33,7 @@
 	],
 
 	"dependencies" : {
+		"nodetime": "x",
 		"express": "3.3.8",
 		"helmet": "0.1.0",
 		"jade": "0.35.0",
