@@ -1,0 +1,39 @@
+/**
+ * Code / Pre
+ */
+
+code
+kdb
+pre
+samp
+	font-family: font-family-monospace
+
+
+code
+	padding: 2px 4px;
+	font-size: 90%;
+	color: color-code;
+	background-color: color-code-background
+	white-space: nowrap;
+	border-radius: base-border-radius;
+
+pre
+	display: block
+	padding: ((computed-line-height - 1) / 2)
+	margin: 0 0 (computed-line-height / 2)
+	font-size: (base-font-size - 1)
+	line-height: base-line-height
+	word-break: break-all
+	word-wrap: break-word
+	color: color-pre
+	background-color: color-pre-background
+	border: 1px solid color-pre-border
+	border-radius: base-border-radius
+
+	code
+		padding: 0
+		font-size: inherit
+		color: inherit
+		white-space: pre-wrap;
+		background-color: transparent
+		border: 0

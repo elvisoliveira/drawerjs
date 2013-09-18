@@ -1,0 +1,123 @@
+/**
+ * Typography
+ */
+
+body
+	-webkit-font-smoothing: antialiased
+
+p
+	margin: 0 0 (computed-line-height / 2)
+
+small
+	font-size: 85%
+
+h1
+h2
+h3
+h4
+h5
+h6
+	font-family: headings-font-family
+	font-weight: headings-font-weight
+	line-height: headings-line-height
+	color: color-headings
+
+	small
+		font-weight: normal
+		line-height: 1
+		color: inherit
+
+h1
+h2
+h3
+	margin-top: computed-line-height
+	margin-bottom: computed-line-height / 2
+
+	small
+		font-size: 65%
+
+h4
+h5
+h6
+	margin-top: computed-line-height / 2
+	margin-bottom: computed-line-height / 2
+
+	small
+		font-size: 75%
+
+
+h1
+	font-size: font-size-h1
+h2
+	font-size: font-size-h2
+h3
+	font-size: font-size-h3
+h4
+	font-size: font-size-h4
+h5
+	font-size: font-size-h5
+h6
+	font-size: font-size-h6
+
+ul
+ol
+	margin-top: 0
+	margin-bottom: computed-line-height / 2
+
+	ul
+	ol
+		margin-bottom: 0
+
+.list-unstyled
+	list-unstyled()
+
+.list-inline
+	list-unstyled()
+	& > li
+		display: inline-block
+		padding-left: 5px
+		padding-right: 5px
+
+blockquote
+	padding: (computed-line-height / 2) computed-line-height
+	margin: 0 0 computed-line-height
+	border-left: 5px solid color-blockquote-border
+	
+	p
+		font-size: base-font-size * 1.25
+		font-weight: 300
+		line-height: 1.25
+
+		&:last-child
+			margin-bottom: 0
+
+	small
+		display: block
+		line-height: base-line-height
+		color: inherit
+	
+		&:before
+			content: "\2014 \00A0"
+	
+	&.pull-right
+		padding-right: 15px
+		padding-left: 0
+		border-right: 5px solid color-blockquote-border
+		border-left: 0
+		
+		p
+		small
+			text-align: right
+		
+		small
+			&:before
+				content: ""
+			
+			&:after
+				content: "\00A0 \2014"
+
+q:before
+q:after
+blockquote:before
+blockquote:after
+	content: ""
