@@ -7,6 +7,6 @@ module.exports = {
 		options: {
 			logConcurrentOutput: true
 		},
-		tasks: ["nodemon:server"]
+		tasks: ["nodemon:server", "watch:stylus"]
 	}
 };

@@ -11,12 +11,13 @@ module.exports = function (grunt) {
 		options = function (path) {
 
 			var key,
-				object = {};
+				object = {},
+				filter = function (option) {
+					key = option.replace(/\.js$/, "");
+					object[key] = require(path + option);
+				};
 
-			glob.sync("*", { cwd: path }).forEach(function (option) {
-				key = option.replace(/\.js$/, "");
-				object[key] = require(path + option);
-			});
+			glob.sync("*", { cwd: path }).forEach(filter);
 
 			return object;
 		};

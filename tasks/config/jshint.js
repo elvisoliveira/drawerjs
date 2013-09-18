@@ -6,11 +6,7 @@ module.exports = {
 	options: {
 		jshintrc: ".jshintrc"
 	},
-	static: ["./src/drawer.js", "./src/jquery.drawer.js"],
-	server: [
-
-		"*.js",
-		"*.json",
-		"./tasks/**/*.js"
-	]
+	drawer: ["./src/drawer.js", "./src/jquery.drawer.js"],
+	static: ["./public/**/*.js"],
+	server: ["*.js", "*.json", "./tasks/**/*.js", "./docs/**/*.js"]
 };
