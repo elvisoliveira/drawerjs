@@ -1,28 +1,18 @@
-angular
-	.module("Drawer", ["ngRoute", "Services", "Filters", "Directives", "Controllers"])
-	.constant("Author", "Drawer")
-	.value("version", "3.0.0")
-	.config(["$routeProvider", "$locationProvider", function ($routeProvider, $locationProvider) {
+angular.module("docs", ["ngRoute", "ngAnimate", "docs.services", "docs.filters", "docs.directives", "docs.controllers"]).config(["$routeProvider", "$locationProvider", function ($routeProvider, $locationProvider) {
 
-		$routeProvider
-			.when("/", {
-
+	var config = {
+			index: {
 				templateUrl : "partials/index",
-				controller : "HomeTestCtrl"
-			})
-			.when("/test", {
+				controller : "IndexCtrl"
+			}
+		};
 
-				templateUrl : "partials/test",
-				controller: "ContactTestCtrl"
-			})
-			.otherwise({
-				redirectTo : "/"
-			});
+	$routeProvider.when("/", config.index);
+	$routeProvider.otherwise({ redirectTo : "/" });
+	$locationProvider.html5Mode(true);
+}]);
 
-		$locationProvider.html5Mode(true);
-	}]);
-	
-angular.module("Services", ["TestService"]);
-angular.module("Filters", ["TestFilter"]);
-angular.module("Directives", ["TestDirective"]);
-angular.module("Controllers", ["HomeControllers", "ContactControllers"]);
+angular.module("docs.services", []);
+angular.module("docs.filters", []);
+angular.module("docs.directives", []);
+angular.module("docs.controllers", []);
