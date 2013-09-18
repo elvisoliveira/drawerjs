@@ -1,5 +1,5 @@
 !!! 5
-html(lang="en", data-ng-app="Drawer")
+html(lang="en", data-ng-app="docs")
 
 	head
 		base(href="/")
@@ -9,7 +9,7 @@ html(lang="en", data-ng-app="Drawer")
 
 		title #{package.name}
 
-		meta(name="description", content="")
+		meta(name="description", content="#{package.description}")
 		meta(name="author", content="#{package.author}")
 		
 		meta(name="HandheldFriendly", content="True")
@@ -32,17 +32,15 @@ html(lang="en", data-ng-app="Drawer")
 		meta(name="apple-mobile-web-app-title", content="#{package.name}")
 
 		link(rel="stylesheet", href="/#{server.static.destination}/css/styles.min.css")
-		script(src="http://10.10.10.102:7878/target/target-script-min.js#anonymous")
-	body(data-csrf-token="", data-startup-src="/#{server.static.destination}/#{application.favicons.directory}/#{application.favicons.startup}/", data-analitycs-id="#{application.analytics.id}", data-analitycs-domain="#{application.analytics.domain}")
+	body(data-csrf-token="", data-startup-src="/#{server.static.destination}/#{application.favicons.directory}/#{application.favicons.startup}/", data-analitycs-id="#{application.analytics.id}", data-analitycs-domain="#{application.analytics.domain}", data-navigation)
 
 		block container
 
 		script(src="#{server.static.destination}/js/vendor/angular/angular.min.js")
 		script(src="#{server.static.destination}/js/vendor/angular-route/angular-route.min.js")
 		script(src="#{server.static.destination}/js/vendor/angular-animate/angular-animate.min.js")
+		script(src="#{server.static.destination}/js/vendor/drawerjs/drawer.min.js")
+		script(src="#{server.static.destination}/js/vendor/google-code-prettify/prettify.js")
 		script(src="#{server.static.destination}/js/application.js")
-		script(src="#{server.static.destination}/js/services/test.js")
-		script(src="#{server.static.destination}/js/filters/interpolate.js")
-		script(src="#{server.static.destination}/js/directives/test.js")
-		script(src="#{server.static.destination}/js/controllers/home.js")
-		script(src="#{server.static.destination}/js/controllers/contact.js")
+		script(src="#{server.static.destination}/js/directives/navigation.js")
+		script(src="#{server.static.destination}/js/controllers/index.js")

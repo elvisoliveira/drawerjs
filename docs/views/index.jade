@@ -4,11 +4,46 @@ block container
 	nav(id="drawer-navigation", class="drawer-navigation")
 		ul
 			li
-				a
-					i(class="icon-dashboard") Dashboard
+				a(href="./")
+					i(class="icon-home")
+					| Drawer
+			li(class="separator")
+				i(class="icon-file")
+				| Documentation
+			li
+				a(href="./") Usage
+			li
+				a(href="./") Options
+			li
+				a(href="./") API
+			li
+				a(href="./") Using jQuery / Zepto
+			li
+				a(href="./") Using AMD
+			li(class="separator")
+				i(class="icon-hammer")
+				| Installation
+			li
+				a(href="./") Bower
+			li
+				a(href="./") Source
+			li(class="separator")
+				i(class="icon-compass")
+				| Compatibility
+			li
+				a(href="./") Used Methods
+			li
+				a(href="./") Supported Browsers
+			li(class="separator")
+				i(class="icon-bug")
+				| Bugs / Features
+			li
+				a(href="./") Request Features
+			li
+				a(href="./") Bug Reports
 	section(id="drawer-content", class="drawer-content")
-		header(id="header", class="header")
-			span(id="open-navigation-trigger", class="button")
-			h1 Drawer
-
-		article(class="content", data-ng-view)
+		header(class="content-header")
+			a(id="open-navigation-trigger", class="button", href="#")
+				i(class="icon-menu")
+		article(data-ng-view, data-ng-animate="{ enter: 'docs-ng-view-enter', leave: 'docs-ng-view-leave' }")
+		footer(class="content-footer")
