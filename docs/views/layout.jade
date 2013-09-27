@@ -32,15 +32,16 @@ html(lang="en", data-ng-app="docs")
 		meta(name="apple-mobile-web-app-title", content="#{package.name}")
 
 		link(rel="stylesheet", href="/#{server.static.destination}/css/styles.min.css")
-	body(data-csrf-token="", data-startup-src="/#{server.static.destination}/#{application.favicons.directory}/#{application.favicons.startup}/", data-analitycs-id="#{application.analytics.id}", data-analitycs-domain="#{application.analytics.domain}", data-navigation)
+	body(data-csrf-token="", data-startup, data-startup-src="/#{server.static.destination}/#{application.favicons.directory}/#{application.favicons.startup}/", data-analitycs-id="#{application.analytics.id}", data-analitycs-domain="#{application.analytics.domain}", data-canvas-navigation)
 
 		block container
 
-		script(src="#{server.static.destination}/js/vendor/angular/angular.min.js")
-		script(src="#{server.static.destination}/js/vendor/angular-route/angular-route.min.js")
-		script(src="#{server.static.destination}/js/vendor/angular-animate/angular-animate.min.js")
-		script(src="#{server.static.destination}/js/vendor/drawerjs/drawer.min.js")
-		script(src="#{server.static.destination}/js/vendor/google-code-prettify/prettify.js")
+		script(src="#{server.static.destination}/js/vendor/highlight/highlight.js")
+		script(src="#{server.static.destination}/js/vendor/angular/angular.js")
+		script(src="#{server.static.destination}/js/vendor/angular-route/angular-route.js")
+		script(src="#{server.static.destination}/js/vendor/angular-animate/angular-animate.js")
+		script(src="#{server.static.destination}/js/vendor/drawerjs/drawer.js")
 		script(src="#{server.static.destination}/js/application.js")
 		script(src="#{server.static.destination}/js/directives/navigation.js")
-		script(src="#{server.static.destination}/js/controllers/index.js")
+		script(src="#{server.static.destination}/js/directives/code.highlight.js")
+		script(src="#{server.static.destination}/js/controllers/route.js")

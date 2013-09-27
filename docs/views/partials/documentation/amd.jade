@@ -1,0 +1,11 @@
+p
+	| There is also support for AMD, you can use RequireJS to load your module async,
+	| just do not forget to add it to the paths object in case you use bower to install it and it is not located under the baseUrl:
+
+code-highlight
+	code
+		| requirejs.config({
+		|     paths: {
+		|         "drawer": "components/drawer.js"
+		|     }
+		| });

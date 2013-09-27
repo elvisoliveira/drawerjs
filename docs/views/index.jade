@@ -4,46 +4,49 @@ block container
 	nav(id="drawer-navigation", class="drawer-navigation")
 		ul
 			li
-				a(href="./")
+				a(data-ng-class="{ active: activetab == 'index' }", href="./")
 					i(class="icon-home")
-					| Drawer
+					| Drawer #{package.version}	
 			li(class="separator")
 				i(class="icon-file")
 				| Documentation
 			li
-				a(href="./") Usage
+				a(data-ng-class="{ active: activetab == 'usage' }", href="./documentation/usage") Usage
 			li
-				a(href="./") Options
+				a(data-ng-class="{ active: activetab == 'options' }", href="./documentation/options") Options
 			li
-				a(href="./") API
+				a(data-ng-class="{ active: activetab == 'api' }", href="./documentation/api") API
 			li
-				a(href="./") Using jQuery / Zepto
+				a(data-ng-class="{ active: activetab == 'jquery' }", href="./documentation/jquery") Using jQuery / Zepto
 			li
-				a(href="./") Using AMD
+				a(data-ng-class="{ active: activetab == 'amd' }", href="./documentation/amd") Using AMD
 			li(class="separator")
 				i(class="icon-hammer")
 				| Installation
 			li
-				a(href="./") Bower
+				a(data-ng-class="{ active: activetab == 'bower' }", href="./installation/bower") Bower
 			li
-				a(href="./") Source
+				a(data-ng-class="{ active: activetab == 'source' }", href="./installation/source") Source
 			li(class="separator")
 				i(class="icon-compass")
 				| Compatibility
 			li
-				a(href="./") Used Methods
+				a(data-ng-class="{ active: activetab == 'methods' }", href="./compatibility/methods") Used Methods
 			li
-				a(href="./") Supported Browsers
+				a(data-ng-class="{ active: activetab == 'support' }", href="./compatibility/support") Supported Browsers
 			li(class="separator")
 				i(class="icon-bug")
 				| Bugs / Features
 			li
-				a(href="./") Request Features
+				a(data-ng-class="{ active: activetab == 'requests' }", href="./bugs/requests") Request Features
 			li
-				a(href="./") Bug Reports
+				a(data-ng-class="{ active: activetab == 'report' }", href="./bugs/report") Bug Reports
 	section(id="drawer-content", class="drawer-content")
-		header(class="content-header")
-			a(id="open-navigation-trigger", class="button", href="#")
-				i(class="icon-menu")
-		article(data-ng-view, data-ng-animate="{ enter: 'docs-ng-view-enter', leave: 'docs-ng-view-leave' }")
+		header(class="content-header clearfix")
+			a(class="drawer-navigation-button pull-left", href="#", data-ng-click="drawer.open($event)")
+				i(class="icon-paragraph-justify")
+			h1(class="pull-left") {{current}}
+			a(class="pull-right", href="https://github.com/rolandjitsu/drawerjs")
+				i(class="github-button icon-github")
+		article(class="content", data-ng-view, data-ng-animate="{ enter: 'docs-ng-view-enter', leave: 'docs-ng-view-leave' }")
 		footer(class="content-footer")

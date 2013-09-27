@@ -1,0 +1,41 @@
+p
+	| There are some prerequisites in order to instantiate the
+	strong &nbsp;Drawer&nbsp;
+	| class or to initiate the
+	strong &nbsp;jQuery plugin
+	| . It needs the following HTML structure:
+
+code-highlight
+	code
+		| &lt;body&gt;
+		|     &lt;nav id="drawer-navigation" class="drawer-navigation"&gt;
+		|         &lt;ul&gt;
+		|            &lt;li&gt;&lt;a href="#"&gt;Dashboard&lt;/a&gt;&lt;/li&gt;
+		|             &lt;li&gt;&lt;a href="#"&gt;Statistics&lt;/a&gt;&lt;/li&gt;
+		|             &lt;li&gt;&lt;a href="#"&gt;Milestones&lt;/a&gt;&lt;/li&gt;
+		|             &lt;li&gt;&lt;a href="#"&gt;Settings&lt;/a&gt;&lt;/li&gt;
+		|             &lt;li&gt;&lt;a href="#"&gt;Logout&lt;/a&gt;&lt;/li&gt;
+		|         &lt;/ul&gt;
+		|     &lt;/nav&gt;
+		|     &lt;section id="drawer-content" class="drawer-content"&gt;
+		| &lt;/body&gt;
+
+p
+	| Using the&nbsp;
+	code drawer-navigation
+	| &nbsp;and&nbsp;
+	code drawer-content
+	| &nbsp;ids isn't required, but if you choose to, you will need to specify that in the options (see
+	a(href="./documentation/options") &nbsp;Options&nbsp;
+	| section).
+	| As far as the styling goes, there are no requirements, you can style the navigation and the content as you wish,
+	| just make sure you don't overwrite some of the styles already applied when the class is instantiated (or if you do, check the
+	a(href="https://github.com/rolandjitsu/drawerjs/blob/master/src/drawer.js") &nbsp;source&nbsp;
+	| code before).
+
+p
+	| At this point you can instantiate the class:
+
+code-highlight
+	code
+		| var drawer = new Drawer(document.body);
