@@ -2,24 +2,13 @@
  * Server Initialization Script | Startup Application
  */
 
-if (process.env.NODETIME_ACCOUNT_KEY) require("nodetime").profile({ accountKey: process.env.NODETIME_ACCOUNT_KEY, appName: "drawerjs" });
-
-var path = require("path"),
-	cluster = require("cluster"),
-	os = require("os");
-
-
-cluster.setupMaster({
-	args: [JSON.stringify(require(path.resolve(__dirname, "config.js")))],
-	exec: path.resolve(__dirname, "docs"),
-	silent: false
-});
-
+var cluster = require("cluster");
 
 if (cluster.isMaster) {
 
-	var i = os.cpus().length - 1,
-		restart = function (worker, code) {		
+	var os = require("os"),
+		i = os.cpus().length - 1,
+		restart = function (worker, code, signal) {		
 			if (code !== 0) cluster.fork();
 		};
 
@@ -29,4 +18,6 @@ if (cluster.isMaster) {
 	}
 
 	cluster.on("exit", restart);
+} else {
+	require("./docs")(require("./config.js"));
 }

@@ -2,7 +2,7 @@
  * Test API Controller
  */
 
-exports.test = function (request, response) {
+module.exports = function (request, response) {
 	
 	return response.json({
 		name : "Roland"

@@ -1,5 +1,5 @@
 /**
- * Partial Index Route Controller
+ * Partial Options Route Controller
  */
 
 var flag = "routes" + require("path").sep,

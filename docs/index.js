@@ -1,149 +1,124 @@
 /**
- * Express Application Script
+ * Export Express HTTP Instance
  */
-
 
 var path = require("path"),
 	express = require("express"),	
 	helmet = require("helmet");
 
 var application = module.exports = express(),
-	config = JSON.parse(process.argv.splice(2));
+	redis = require("connect-redis")(express);
 
-var routes = require(path.resolve(__dirname, "controllers", "routes")),
-	api = require(path.resolve(__dirname, "controllers", "api"));
-	
-var cluster = require("cluster"),
-	worker = cluster.worker;
+var controllers = require(path.resolve(__dirname, "controllers"));
 
-var RedisSessionStore = require("connect-redis")(express),
-	redis = new RedisSessionStore({
-		host: config.databses.redis.host,
-		port: config.databses.redis.port,
-		pass: config.databses.redis.auth,
-		no_ready_check: true,
-		ttl: 60*60
-	});
+//console.log(controllers);
 
+module.exports = function (config) {
 
-/**
- * Express Template Engine / Environment
- */
+		
 
-application.set("env", config.server.process.environment);
-application.set("view engine", "jade");
-application.set("views", path.join(__dirname, "views"));
-
-
-/**
- * Express Development Configuration
- */
-
-application.configure("development", function () {
-	application.use(express.logger("development"));
-	application.use(express.errorHandler({
-		dumpExceptions: true,
-		showStack: true
-	}));
-});
-
-
-/**
- * Express Production Configuration
- */
-
-application.configure("production", function () {
-	application.use(express.errorHandler());
-});
-
-
-/**
- * Express Application Configuration
- */
-
-application.configure(function () {
-
-
-	/**
-     * Safety Headers Middleware
-     */
-
-	application.use(helmet.xframe());
-	application.use(helmet.iexss());
-	application.use(helmet.contentTypeOptions());
-	application.use(helmet.cacheControl());
-
-
-	/**
-	 * POST Request Handler Middleware
-	 */
-
-	application.use(express.bodyParser());
-	application.use(express.methodOverride());
-
-
-	/**
-     * Static Assets
-     */
-
-	application.use("/" + config.server.static.destination, express.static(path.resolve(__dirname, "..", config.server.static.source)));
-
-
-	/**
-     * Cookie Middleware / CSRF Middleware
-     */
-
-	application.use(express.cookieParser(config.server.cookie.secret));
-	application.use(express.session({
-		secret: config.server.cookie.secret,
-		cookie: {
-			httpOnly: config.server.cookie.http,
-			secure: config.server.cookie.secure
+	var development = function () {
+			application.use(express.logger("dev"));
+			application.use(express.errorHandler({
+				dumpExceptions: true,
+				showStack: true,
+				showMessage: true 
+			}));
 		},
-		store: redis
-	}));
-	application.use(express.csrf());
+		production = function () {
+			application.use(express.compress());
+		},
+		general = function () {
 
 
-	/**
-	 * Jade Layout Data
-	 */
+			/**
+		     * Safety Headers Middleware
+		     */
+
+			application.use(helmet.xframe());
+			application.use(helmet.iexss());
+			application.use(helmet.contentTypeOptions());
+			application.use(helmet.cacheControl());
+
+
+			/**
+			 * POST Request Handler Middleware
+			 */
+
+			application.use(express.bodyParser());
+			application.use(express.methodOverride());
+
+
+			/**
+		     * Static Assets
+		     */
+
+			application.use("/" + config.server.static.destination, express.static(path.resolve(__dirname, "..", config.server.static.source)));
+
+
+			/**
+		     * Cookie Middleware / CSRF Middleware
+		     */
+
+			application.use(express.cookieParser(config.server.cookie.secret));
+			application.use(express.session({
+				secret: config.server.cookie.secret,
+				cookie: {
+					httpOnly: config.server.cookie.http,
+					secure: config.server.cookie.secure
+				},
+				store: new redis({
+					host: config.databses.redis.host,
+					port: config.databses.redis.port,
+					pass: config.databses.redis.auth,
+					no_ready_check: true,
+					ttl: 60 * 60
+				})
+			}));
+			application.use(express.csrf());
+
+
+			/**
+			 * Jade Layout Data
+			 */
+			
+			application.use(function (request, response, next) {
+				response.locals = config;
+				next();
+			});
+
+
+			/**
+		     * Routes Handler Middleware
+		     */
+
+			application.use(application.router);
+		};
+
+	application.set("env", config.server.process.environment);
+	application.set("view engine", "jade");
+	application.set("views", path.join(__dirname, "views"));
+	application.configure("development", development);
+	application.configure("production", production);
+	application.configure(general);
+
 	
-	application.use(function (request, response, next) {
-		response.locals = config;
-		next();
-	});
+
+	application.get("/", controllers.routes.index);
+	application.get("/partials/index", controllers.routes.partials.index);
+	application.get("/partials/documentation/amd", controllers.routes.partials.documentation.amd);
+	application.get("/partials/documentation/api", controllers.routes.partials.documentation.api);
+	application.get("/partials/documentation/jquery", controllers.routes.partials.documentation.jquery);
+	application.get("/partials/documentation/options", controllers.routes.partials.documentation.options);
+	application.get("/partials/documentation/usage", controllers.routes.partials.documentation.usage);
+	application.get("/partials/installation/bower", controllers.routes.partials.installation.bower);
+	application.get("/partials/installation/source", controllers.routes.partials.installation.source);
+	application.get("/partials/compatibility/methods", controllers.routes.partials.compatibility.methods);
+	application.get("/partials/compatibility/support", controllers.routes.partials.compatibility.support);
+	application.get("/partials/bugs/requests", controllers.routes.partials.bugs.requests);
+	application.get("/partials/bugs/report", controllers.routes.partials.bugs.report);
+	application.get("*", controllers.routes.index);
 
 
-	/**
-     * Routes Handler Middleware
-     */
-
-	application.use(application.router);
-});
-
-
-/**
- * API Handler
- */
-
-application.get("/api/test", api.test);
-
-
-/**
- * Routes Handler
- */
-
-application.get("/", routes.index);
-application.get("/partials/:name", routes.partials);
-application.get("*", routes.index);
-
-
-/**
- * Create Express Server
- */
-
-var server,
-	http = require("http");
-
-server = http.createServer(application).listen(config.server.environment[config.server.process.environment].port);
+	return require("http").createServer(application).listen(config.server.environment[config.server.process.environment].port);	
+};
