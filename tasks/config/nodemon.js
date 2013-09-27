@@ -8,7 +8,7 @@ module.exports = {
 			NODE_ENV: "development",
 			PORT: 8080
 		},
-		watchedExtensions: ["js", "json"]
+		watchedExtensions: ["js", "json", "jade"]
 	},
 	server: {}
 };

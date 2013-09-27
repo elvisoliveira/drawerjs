@@ -4,7 +4,7 @@
 
 module.exports = {
 	options: {
-		targetDir: "./public/"
+		targetDir: "./public/js/vendor/"
 	},
 	install: {}
 };
