@@ -1,14 +1,30 @@
 angular
 	.module("docs.directives")
-	.directive("navigation", [function () {
+	.directive("canvasNavigation", ["$location", function ($location) {
 
 		var definition = {
+				restrict: "A",
+				controller: function ($scope, $element, $attrs) {},
 				link: function (scope, element, attrs) {
 
-					var options = {
-							offset: 80
+					var redirect = function () {
+							console.log("closed")
+							$location.path("/documentation/options");
 						},
-						drawer = new Drawer(element[0], options);
+						options = {
+							offset: 80,
+							onClosed: redirect
+						},
+						drawer = new Drawer(element[0], options),
+						links = document.getElementById("drawer-navigation").children[0].children;
+
+					//console.log($location, links);
+
+					scope.drawer = {};
+					scope.drawer.open = function (event) {
+						event.preventDefault();
+						drawer.open();
+					};
 				}
 			};
 
