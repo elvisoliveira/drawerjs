@@ -44,6 +44,7 @@ The class needs the body element sent through when instantiated, becase it uses 
 #### Options
 I have made a few options available that can be used for various things, such as changing the default content and navigation ids, or having a callback function on close / open, read the following description to find out what options are available:
 + **content** *String / DOM Object* (Default: `#drawer-content`) - with this option you specify the id of the content. If you pass an id, the class will be able to query the DOM and retrieve the node for usage, otherwise (in case you have some class names instead or you prefer data attributes) you will have to query it and send the node object yourself as the value of this option:
+
 ``` js
 var drawer = new Drawer(document.body, {
 	content: document.getElementsByClassName("content")
@@ -51,6 +52,7 @@ var drawer = new Drawer(document.body, {
 ```
 + **offset** *Integer* (Default: `120`) - this options will set the amount of pixels of content visible when the navigation is revealed;
 + **navigation** *String / DOM Object* (Default: `#drawerjs-navigation`) - with this option you specify the id o the navigation. The behavior is the same as the *content* option has:
+
 ``` js
 var drawer = new Drawer(document.body, {
 	navigation: document.getElementsByClassName("navigation")
@@ -58,30 +60,35 @@ var drawer = new Drawer(document.body, {
 ```
 + **speed** *Integer* (Default: `250`) - this options sets the speed of the animation when the navigation is closed or opened;
 + **onOpen** *Function* - it's a function that it's triggerd each time the navigation is revealed in the exact moment the animation starts, but it is not triggered if the content slides back in:
+
 ``` js
 var drawer = new Drawer(document.body, {
 	onOpen: function () {}
 });
 ```
 + **onOpened** *Function* - it's a function that it's triggerd each time the navigation is revealed and when the animation has ended:
+
 ``` js
 var drawer = new Drawer(document.body, {
 	onOpened: function () {}
 });
 ```
 + **onClose** *Function* - the same as the *onOpen* option, but with opposite behavior:
+
 ``` js
 var drawer = new Drawer(document.body, {
 	onClose: function () {}
 });
 ```
 + **onClosed** *Function* - it's a function that it's triggerd each time the navigation is hidden and when the animation has ended:
+
 ``` js
 var drawer = new Drawer(document.body, {
 	onClosed: function () {}
 });
 ```
 + **transitioned** *Function* - this options allows you to execute various tasks whenever the content is transitioned, no matter if it's closed / opened / pulled back:
+
 ``` js
 var drawer = new Drawer(document.body, {
 	transitioned: function () {}
@@ -91,11 +98,13 @@ var drawer = new Drawer(document.body, {
 #### API
 Along with the options, the class exports two API methods:
 + **open** *Function* - use this method to reveal the navigation (slide the content out) after you have instantiated the class:
+
 ``` js
 var drawer = new Drawer(document.body);
 drawer.open();
 ```
 + **close** *Function* - the same as the *open* method, you can use this one after the class is instantiated and it can hide the navigation (slide the content back in):
+
 ``` js
 var drawer = new Drawer(document.body);
 drawer.close();
