@@ -39,3 +39,9 @@ p
 code-highlight
 	code
 		| var drawer = new Drawer(document.body);
+
+p
+	| The class needs the body element sent through when instantiated, becase it uses it to apply some of the necessary styles
+	| to make the content sliding work, if it isn't passed it will default to&nbsp;
+	code document.body
+	| &nbsp;anyway.

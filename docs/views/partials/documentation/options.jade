@@ -7,7 +7,9 @@ dl.dl-horizontal
 		| content
 	dd
 		em String / DOM Object
-		| &nbsp;(Default: #drawer-content)
+		| &nbsp;(Default:&nbsp;
+		code #drawer-content
+		| )
 		br
 		| With this option you specify the id of the content. If you pass an id, the class will be able to query the DOM and retrieve the node for usage,
 		| otherwise (in case you have some class names instead or you prefer data attributes)
@@ -23,16 +25,22 @@ dl.dl-horizontal
 		| offset
 	dd
 		em Integer
-		| &nbsp;(Default: 120)
+		| &nbsp;(Default:&nbsp;
+		code 120
+		| )
 		br
 		| This options will set the amount of pixels of content visible when the navigation is revealed;
 	dt
 		| navigation
 	dd
 		em String / DOM Object
-		| &nbsp;(Default: #drawerjs-navigation)
+		| &nbsp;(Default:&nbsp;
+		code #drawerjs-navigation
+		| )
 		br
-		| With this option you specify the id o the navigation. The behavior is the same as the content option has:
+		| With this option you specify the id o the navigation. The behavior is the same as the&nbsp;
+		em content
+		| &nbsp;option has:
 		br
 		br
 		code-highlight
@@ -44,7 +52,9 @@ dl.dl-horizontal
 		| speed
 	dd
 		em Integer
-		| &nbsp;(Default: 250)
+		| &nbsp;(Default:&nbsp;
+		code 250
+		| )
 		br
 		| This options sets the speed of the animation when the navigation is closed or opened;
 	dt
@@ -79,7 +89,9 @@ dl.dl-horizontal
 	dd
 		em Function
 		br
-		| The same as the onOpen option, but with oposite behavior:
+		| The same as the&nbsp;
+		em onOpen
+		| &nbsp;option, but with opposite behavior:
 		br
 		br
 		code-highlight
@@ -105,7 +117,7 @@ dl.dl-horizontal
 	dd
 		em Function
 		br
-		| This options allows you to do stuff whenever the content is transitioned, no matter if it's closed / opened / pulled back:
+		| This options allows you to execute various tasks whenever the content is transitioned, no matter if it's closed / opened / pulled back:
 		br
 		br
 		code-highlight
