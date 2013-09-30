@@ -1,23 +1,20 @@
 /**
- * Server Initialization Script | Startup Application
+ * Master Process
  */
 
 var cluster = require("cluster");
 
+cluster.setupMaster({
+	exec: "docs"
+});
+
 if (cluster.isMaster) {
 
 	var os = require("os"),
-		i = os.cpus().length - 1,
-		restart = function (worker, code, signal) {		
-			if (code !== 0) cluster.fork();
-		};
+		cpus = os.cpus().length - 1;
 
-	while (i >= 0) {
-		cluster.fork();;
-		i--;
+	while (cpus >= 0) {
+		cluster.fork();
+		cpus--;
 	}
-
-	cluster.on("exit", restart);
-} else {
-	require("./docs")(require("./config.js"));
 }
