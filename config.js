@@ -25,7 +25,7 @@ var Configuration = function () {
 	this.server.state.production = this.server.process.environment === "production" ? true : false;
 	this.server.cookie = {};
 	this.server.cookie.http = true;
-	this.server.cookie.secret = crypto.randomBytes(128).toString("hex");
+	this.server.cookie.secret = crypto.randomBytes(256).toString("hex");
 	this.server.cookie.secure = false;
 	this.server.environment = {};
 	this.server.environment.development = {};
