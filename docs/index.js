@@ -12,6 +12,10 @@ var application = module.exports = express(),
 var config = require(path.resolve(process.cwd(), "config.js")),
 	controllers = require(path.resolve(__dirname, "controllers"));
 
+var csrf = function (request) {
+		return (request.body && request.body._csrf) || (request.query && request.query._csrf) || (request.headers["x-csrf-token"]) || (request.headers["x-xsrf-token"]);
+	};
+
 var development = function () {
 		application.use(express.logger("dev"));
 		application.use(express.errorHandler({
@@ -47,6 +51,7 @@ var development = function () {
 			})
 		}));
 		application.use(express.csrf());
+		application.use(express.csrf({ value: csrf }));
 		application.use(application.router);
 	};
 
@@ -60,7 +65,7 @@ application.configure(base);
 
 var route = function (path, routes, level) {
 		
-		var key,
+		var key, type, handler,
 			level = level || 0,
 			keys = Object.keys(routes),
 			i = keys.length - 1;
@@ -69,9 +74,13 @@ var route = function (path, routes, level) {
 
 			key = keys[i];
 
-			if (typeof routes[key] === "function") {
-				if (key === "index" && level === 0) application.get(path, routes[key]);
-				else application.get(path + key, routes[key]);
+			if (routes[key].hasOwnProperty("handler") && typeof routes[key].handler === "function") {
+					
+				type = routes[key].type.toLowerCase();
+				handler = routes[key].handler;
+
+				if (key === "index" && level === 0) application[type](path, handler);
+				else application[type](path + key, handler);
 			} else {
 				route(path + key + "/", routes[key], level + 1);
 			}
@@ -82,7 +91,7 @@ var route = function (path, routes, level) {
 
 route("/", controllers.routes);
 route("/api/", controllers.api);
-application.get("*", controllers.routes.index);
+application.get("*", controllers.routes.index.handler);
 
 var server,
 	http = require("http");
