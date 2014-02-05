@@ -1,16 +1,5 @@
-# [Git Ignore](http://gitignore.io) #
-
-### Sublime Text ###
-*.sublime-workspace
-
 ### WebStorm ###
 *.idea
-
-### Windows ###
-Thumbs.db
-ehthumbs.db
-Desktop.ini
-$RECYCLE.BIN/**
 
 ### OSX ###
 .DS_Store
@@ -20,24 +9,3 @@ Icon
 ._*
 .Spotlight-V100
 .Trashes
-
-### Node ###
-*.seed
-*.log
-*.csv
-*.dat
-*.out
-*.pid
-*.gz
-lib-cov/**
-pids/**
-logs/**
-results/**
-npm-debug.log
-node_modules/**
-
-### Heroku ###
-*.env
-
-### Bower ###
-components/**

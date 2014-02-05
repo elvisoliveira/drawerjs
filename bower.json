@@ -1,12 +1,5 @@
 {
 	"name": "Drawer",
 	"version": "2.0.0",
-	"main": ["./src/drawer.js", "./src/jquery.drawer.js"],
-
-	"devDependencies": {
-		"angular": "1.2.0-rc.2",
-		"angular-route": "1.2.0-rc.2",
-		"angular-animate": "1.2.0-rc.2",
-		"drawerjs": "2.0.0"
-	}
+	"main": ["./drawer.js"]
 }

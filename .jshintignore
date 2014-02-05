@@ -1,7 +1,0 @@
-# Ignore Minified Files #
-
-components/**/*.js
-dist/**/*.min.js
-node_modules/**/*.js
-public/**/*.min.js
-public/js/vendor/**/*.js
