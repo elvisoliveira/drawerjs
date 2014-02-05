@@ -1,40 +1,27 @@
 # [Git Ignore](http://gitignore.io) #
 
 ### Sublime Text ###
-
-# SublimeText project files
 *.sublime-workspace
 
+### WebStorm ###
+*.idea
 
 ### Windows ###
-
-# Windows image file caches
 Thumbs.db
 ehthumbs.db
-
-# Folder config file
 Desktop.ini
-
-# Recycle Bin used on file shares
 $RECYCLE.BIN/**
 
-
 ### OSX ###
-
 .DS_Store
 .AppleDouble
 .LSOverride
 Icon
-
-# Thumbnails
 ._*
-
-# External Disk
 .Spotlight-V100
 .Trashes
 
-
-### NodeJS ###
+### Node ###
 *.seed
 *.log
 *.csv
@@ -42,19 +29,15 @@ Icon
 *.out
 *.pid
 *.gz
-
 lib-cov/**
 pids/**
 logs/**
 results/**
-
 npm-debug.log
 node_modules/**
 
-
 ### Heroku ###
 *.env
-
 
 ### Bower ###
 components/**
